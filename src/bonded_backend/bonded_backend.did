@@ -1,0 +1,43 @@
+type Callendars = variant { None; OCalendar; GCalendar };
+type Calls = variant { GMeet; Messenger; None; WhatsApp; Zoom; OpenChat };
+type DMs = variant { Messenger; None; WhatsApp; OpenChat; Telegram };
+type DocumentTypes = variant {
+  None;
+  MarriageCertificate;
+  BankStatement;
+  Other;
+  UtilityBill;
+};
+type Result = variant { Ok : User; Err : text };
+type Result_1 = variant { Ok : vec User; Err : text };
+type Role = variant { User; Verified };
+type Socials = variant { None; Tiktok; Facebook; Instagram };
+type Status = variant { Bonded; Complicated; Single };
+type Subscriptions = variant { None; Monthly; Yearly };
+type User = record {
+  dm : vec DMs;
+  residency : text;
+  status : Status;
+  partner_username : text;
+  subscriptions : vec Subscriptions;
+  updated_at : int64;
+  partner_email : text;
+  document_type : vec DocumentTypes;
+  username : text;
+  provider : text;
+  social : vec Socials;
+  calls : vec Calls;
+  role : Role;
+  callendar : vec Callendars;
+  created_at : int64;
+  nationality : text;
+  email : text;
+  document : vec blob;
+  principal_id : principal;
+  profile : blob;
+};
+service : {
+  create_user : (text, opt text) -> (Result);
+  get_all_users : () -> (Result_1);
+  get_user : () -> (Result);
+}

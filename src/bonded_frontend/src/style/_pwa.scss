@@ -1,0 +1,230 @@
+// ANCHOR: PWA-specific styles using the new color scheme
+@use "./_variables.scss" as *;
+
+// NOTE: PWA Install Button Styles
+.pwa-install-button {
+    background: var(--pwa-install-bg);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--pwa-border-radius);
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--pwa-shadow);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        background: var(--pwa-install-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus {
+        outline: 2px solid var(--secondary-color);
+        outline-offset: 2px;
+    }
+
+    // NOTE: Icon styles
+    &::before {
+        content: "📱";
+        font-size: 16px;
+    }
+}
+
+// ANCHOR: PWA Status Indicators
+.pwa-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: var(--pwa-border-radius);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-family-sans);
+
+    &.online {
+        background: rgba(0, 212, 5, 0.1);
+        color: var(--pwa-status-online);
+        border: 1px solid rgba(0, 212, 5, 0.2);
+
+        &::before {
+            content: "🟢";
+        }
+    }
+
+    &.offline {
+        background: rgba(255, 59, 48, 0.1);
+        color: var(--pwa-status-offline);
+        border: 1px solid rgba(255, 59, 48, 0.2);
+
+        &::before {
+            content: "🔴";
+        }
+    }
+}
+
+// ANCHOR: PWA Update Notification
+.pwa-update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-white);
+    border: 1px solid var(--border-color-100);
+    border-radius: var(--pwa-border-radius);
+    padding: 16px 20px;
+    box-shadow: var(--pwa-shadow);
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-family-sans);
+
+    .update-icon {
+        font-size: 24px;
+    }
+
+    .update-content {
+        flex: 1;
+
+        .update-title {
+            font-weight: 600;
+            color: var(--front-color-100);
+            margin-bottom: 4px;
+        }
+
+        .update-message {
+            font-size: 14px;
+            color: var(--front-color-200);
+        }
+    }
+
+    .update-actions {
+        display: flex;
+        gap: 8px;
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &.update-btn {
+                background: var(--secondary-color);
+                color: var(--color-white);
+
+                &:hover {
+                    background: var(--blue-color-100);
+                }
+            }
+
+            &.dismiss-btn {
+                background: var(--gray-color-300);
+                color: var(--front-color-100);
+
+                &:hover {
+                    background: var(--gray-color-200);
+                }
+            }
+        }
+    }
+}
+
+// ANCHOR: PWA Splash Screen Styles - REMOVED
+// NOTE: Splash screen styles have been removed as requested by user
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+// ANCHOR: PWA-specific responsive adjustments
+@include respond-down(mobile) {
+    .pwa-install-button {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .pwa-update-notification {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        transform: none;
+        width: auto;
+        max-width: none;
+    }
+}
+
+// ANCHOR: PWA-specific animations
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.pwa-fade-in {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.pwa-fade-out {
+    animation: fadeOutDown 0.3s ease-out;
+}
+
+// ANCHOR: PWA-specific utility classes
+.pwa-hidden {
+    display: none !important;
+}
+
+.pwa-visible {
+    display: block !important;
+}
+
+.pwa-flex {
+    display: flex !important;
+}
+
+.pwa-grid {
+    display: grid !important;
+}
+
+// NOTE: PWA-specific focus styles for accessibility
+.pwa-focus-visible {
+    &:focus-visible {
+        outline: 2px solid var(--secondary-color);
+        outline-offset: 2px;
+    }
+}

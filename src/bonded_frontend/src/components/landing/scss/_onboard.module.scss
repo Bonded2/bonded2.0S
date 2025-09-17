@@ -1,0 +1,251 @@
+@use "@/style/variables" as *;
+
+// ANCHOR: Full-width wrapper for background color
+.onboardWrapper {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.onboardContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    padding-top: calc(20px + var(--safe-area-inset-top, 0px));
+    padding-bottom: calc(20px + var(--safe-area-inset-bottom, 0px));
+    gap: 24px;
+
+    // ANCHOR: Tablet (720px - 1024px)
+    @include respond-between(tablet, desktop) {
+        max-width: 480px;
+        padding: 20px;
+        padding-top: calc(20px + var(--safe-area-inset-top, 0px));
+        padding-bottom: calc(20px + var(--safe-area-inset-bottom, 0px));
+    }
+
+    // ANCHOR: Mobile and below
+    @include respond-down(tablet) {
+        max-width: 100%;
+        padding: 16px;
+        padding-top: calc(16px + var(--safe-area-inset-top, 0px));
+        padding-bottom: calc(16px + var(--safe-area-inset-bottom, 0px));
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        padding: 12px;
+        padding-top: calc(12px + var(--safe-area-inset-top, 0px));
+        padding-bottom: calc(12px + var(--safe-area-inset-bottom, 0px));
+    }
+}
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-bottom: 8px;
+    color: var(--secondary-color);
+    transition: all 0.3s ease;
+
+    // ANCHOR: Tablet (720px - 1024px)
+    @include respond-between(tablet, desktop) {
+        width: 70px;
+        height: 70px;
+        padding: 12px;
+    }
+
+    // ANCHOR: Mobile and below
+    @include respond-down(tablet) {
+        width: 60px;
+        height: 60px;
+        padding: 10px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        width: 50px;
+        height: 50px;
+        padding: 8px;
+    }
+
+    img {
+        width: 120px;
+        height: auto;
+        object-fit: contain;
+
+        // ANCHOR: Tablet (720px - 1024px)
+        @include respond-between(tablet, desktop) {
+            width: 100px;
+            height: auto;
+        }
+
+        // ANCHOR: Mobile and below
+        @include respond-down(tablet) {
+            width: 100px;
+            height: auto;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            width: 100px;
+            height: auto;
+        }
+    }
+}
+
+.stepTextContainer {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .stepTitle {
+        font-weight: 400;
+        margin: 0;
+        color: var(--front-color-400);
+        font-size: 50px;
+        line-height: 1.2;
+        font-family: var(--font-family-serif);
+
+        // ANCHOR: Tablet (720px - 1024px)
+        @include respond-between(tablet, desktop) {
+            font-size: 48px;
+        }
+
+        // ANCHOR: Mobile and below
+        @include respond-down(tablet) {
+            font-size: 40px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            font-size: 32px;
+        }
+    }
+
+    .stepText {
+        font-size: 20px;
+        color: var(--front-color-400);
+        line-height: 1.5;
+        margin: 0;
+        font-weight: 400;
+
+        // ANCHOR: Tablet (720px - 1024px)
+        @include respond-between(tablet, desktop) {
+            font-size: 18px;
+        }
+
+        // ANCHOR: Mobile and below
+        @include respond-down(tablet) {
+            font-size: 16px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            font-size: 14px;
+        }
+    }
+}
+
+.nextButton {
+    margin-top: 32px;
+    padding: 12px 24px;
+    color: var(--gray-color-100);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+
+    // ANCHOR: Tablet (720px - 1024px)
+    @include respond-between(tablet, desktop) {
+        padding: 11px 22px;
+        font-size: 15.5px;
+        margin-top: 28px;
+    }
+
+    svg {
+        width: 16px;
+        height: auto;
+        display: block;
+    }
+
+    &:hover {
+        transform: translateY(-1px);
+        opacity: 0.8;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    // ANCHOR: Mobile and below
+    @include respond-down(tablet) {
+        padding: 10px 20px;
+        font-size: 15px;
+        margin-top: 24px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        padding: 8px 16px;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+}
+
+.stepDots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        gap: 6px;
+        margin-top: 20px;
+    }
+}
+
+.stepDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--front-color-300);
+    transition: all 0.3s ease;
+
+    &.active {
+        background: var(--front-color-100);
+        width: 24px;
+        border-radius: 4px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        width: 6px;
+        height: 6px;
+
+        &.active {
+            width: 20px;
+        }
+    }
+}

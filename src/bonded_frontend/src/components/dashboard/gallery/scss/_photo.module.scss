@@ -1,0 +1,382 @@
+@use "@/style/variables" as *;
+
+.photoContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    // Hide scrollbar for webkit browsers (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: none;
+
+    // Hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 12px;
+
+    .headerTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: start;
+        line-height: 1.2;
+
+        // ANCHOR: Desktop responsive
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet responsive
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile responsive
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile responsive
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        // ANCHOR: Extra small mobile
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+}
+
+.dateContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+    gap: 12px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    transform: scale(0.95);
+
+    .dateFrom {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .dateTo {
+        flex: 1;
+        min-width: 0;
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        gap: 16px;
+        padding: 12px;
+        transform: scale(1);
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        gap: 14px;
+        padding: 10px;
+        transform: scale(0.95);
+    }
+
+    // ANCHOR: Mobile responsive - Keep inline on mobile
+    @include respond-down(tablet) {
+        flex-direction: row;
+        gap: 8px;
+        padding: 8px;
+
+        .dateFrom,
+        .dateTo {
+            flex: 1;
+            min-width: 0;
+        }
+        transform: scale(0.9);
+    }
+
+    // ANCHOR: Small mobile responsive - Still keep inline
+    @include respond-down(mobile) {
+        flex-direction: row;
+        gap: 6px;
+        padding: 6px;
+
+        .dateFrom,
+        .dateTo {
+            flex: 1;
+            min-width: 0;
+        }
+        transform: scale(0.8);
+    }
+
+    // ANCHOR: Extra small mobile - Only stack if absolutely necessary
+    @include respond-down(small) {
+        flex-direction: row;
+        gap: 4px;
+        padding: 4px;
+
+        .dateFrom,
+        .dateTo {
+            flex: 1;
+            min-width: 0;
+        }
+        transform: scale(0.75);
+    }
+}
+
+.galleryContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        max-width: 1000px;
+        padding: 20px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        max-width: 700px;
+        padding: 16px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        max-width: 400px;
+        padding: 12px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        max-width: 350px;
+        padding: 10px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        max-width: 300px;
+        padding: 8px;
+    }
+}
+
+.galleryItem {
+    background-color: var(--background-color-500);
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
+    min-height: 148px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        min-height: 160px;
+        padding: 18px;
+        gap: 10px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        min-height: 154px;
+        padding: 16px;
+        gap: 9px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        min-height: 148px;
+        padding: 14px;
+        gap: 8px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        min-height: 140px;
+        padding: 12px;
+        gap: 6px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        min-height: 132px;
+        padding: 10px;
+        gap: 6px;
+    }
+}
+
+.galleryImage {
+    width: 100%;
+    height: auto;
+    max-height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        max-height: 100px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        max-height: 95px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        max-height: 90px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        max-height: 85px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        max-height: 80px;
+    }
+}
+
+.galleryDate {
+    background-color: var(--background-color-300);
+    width: 100%;
+    height: 18px;
+    border-radius: 2px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--front-color-700);
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        height: 20px;
+        font-size: 11px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        height: 19px;
+        font-size: 10px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        height: 18px;
+        font-size: 10px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        height: 16px;
+        font-size: 9px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        height: 16px;
+        font-size: 9px;
+    }
+}
+
+.loadMoreButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    padding: 0 16px;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        margin-top: 20px;
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        margin-top: 18px;
+        padding: 0 18px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        margin-top: 16px;
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        margin-top: 14px;
+        padding: 0 14px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        margin-top: 12px;
+        padding: 0 12px;
+    }
+}

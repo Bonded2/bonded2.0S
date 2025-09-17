@@ -1,0 +1,162 @@
+@use "@/style/variables" as *;
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+
+    .inputLabel {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--front-color-500);
+        margin-bottom: 4px;
+
+        &.dateLabel {
+            color: var(--front-color-500);
+            font-weight: 600;
+        }
+    }
+
+    .inputField {
+        padding: 12px 16px;
+        border: 1px solid var(--border-color-100);
+        border-radius: 4px;
+        font-size: 16px;
+        background: var(--background-color-100);
+        transition: border-color 0.2s ease;
+        width: 100%;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: none;
+            border-color: var(--border-color-100);
+        }
+
+        &::placeholder {
+            color: var(--gray-color-200);
+        }
+
+        &:disabled {
+            background: var(--background-color-500);
+            color: var(--gray-color-200);
+            cursor: not-allowed;
+        }
+
+        &.hideBorder {
+            border: none;
+        }
+    }
+
+    .passwordInputWrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .inputField {
+            padding-right: 48px;
+            width: 100%;
+        }
+
+        .passwordIcon {
+            position: absolute;
+            right: 16px;
+            width: 20px;
+            height: 20px;
+            color: var(--front-color-500);
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+
+    .searchInputWrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .inputField {
+            padding-left: 48px;
+            width: 100%;
+        }
+
+        .searchIcon {
+            position: absolute;
+            left: 16px;
+            width: 20px;
+            height: 20px;
+            color: var(--front-color-800);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        &.lightBackground {
+            .inputField {
+                background-color: rgba(192, 196, 255, 0.1);
+            }
+        }
+
+        &.hideBorder {
+            .inputField {
+                border: none;
+            }
+        }
+    }
+
+    .dateInputWrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .dateInput {
+            padding-right: 48px;
+            width: 100%;
+            color: var(--front-color-700);
+            cursor: pointer;
+            background: var(--background-color-100);
+
+            &:focus {
+                color: var(--front-color-700);
+                outline: none;
+                border-color: var(--border-color-300);
+            }
+
+            // Style the native placeholder
+            &::placeholder {
+                color: var(--front-color-400);
+                opacity: 1;
+            }
+
+            // Hide native calendar picker (we show our own icon)
+            &::-webkit-calendar-picker-indicator {
+                position: absolute;
+                right: 16px;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                opacity: 0;
+                z-index: 2;
+            }
+
+            // Style the native date input parts
+            &::-webkit-datetime-edit-text {
+                color: var(--front-color-700);
+            }
+
+            &::-webkit-datetime-edit-month-field,
+            &::-webkit-datetime-edit-day-field,
+            &::-webkit-datetime-edit-year-field {
+                color: var(--front-color-700);
+            }
+        }
+
+        .calendarIcon {
+            position: absolute;
+            right: 16px;
+            width: 20px;
+            height: 20px;
+            color: var(--front-color-500);
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+}

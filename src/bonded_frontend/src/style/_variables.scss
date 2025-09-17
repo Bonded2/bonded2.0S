@@ -1,0 +1,150 @@
+@use "sass:map";
+
+:root {
+    // Primary colors
+    --primary-color: #f2f1ff;
+    --secondary-color: #697dff;
+    --tertiary-color: #e2e9ff;
+    --quaternary-color: #a4eae3;
+    --quinary-color: #c0c4ff;
+
+    // Common Colors
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    // Blue
+    --blue-color-100: #5365cd;
+    --blue-color-200: #315ad6;
+    --blue-color-300: #1941f1;
+    --blue-color-400: #0032ff;
+    --blue-color-500: #788aff;
+    --blue-color-600: #3e4e9e;
+    --blue-color-700: #4E5ED8;
+    --blue-color-800: #C1BBF1;
+    --blue-color-900: #323F8C;
+
+    // Gray colors
+    --gray-color-100: #424242;
+    --gray-color-200: #b5b5b5;
+    --gray-color-300: #f5f5f5;
+    --gray-color-400: #182347;
+    --gray-color-500: #0e0f1e;
+
+    // Different colors
+    --blue-color: #007aff;
+    --green-color: #00d405;
+    --cyan-color: #16dbcc;
+    --cyan-color-100: #cef1ee;
+    --sakura-color: #ff8297;
+    --pig-color: #fcdbe0;
+
+    // Background colors
+    --background-color-100: var(--primary-color);
+    --background-color-200: var(--secondary-color);
+    --background-color-300: var(--tertiary-color);
+    --background-color-400: var(--blue-color-100);
+    --background-color-500: var(--color-white);
+    --background-color-600: var(--quinary-color);
+    --background-color-700: var(--pig-color);
+    --background-color-800: var(--gray-color-400);
+    --background-color-900: var(--blue-color-600);
+    --background-color-1000: var(--blue-color-500);
+    --background-color-1100: var(--gray-color-200);
+    --background-color-1200: var(--gray-color-300);
+
+    // Front colors
+    --front-color-50: var(--color-white);
+    --front-color-100: var(--gray-color-100);
+    --front-color-200: var(--gray-color-200);
+    --front-color-300: var(--gray-color-300);
+    --front-color-400: var(--gray-color-400);
+    --front-color-500: var(--blue-color-100);
+    --front-color-600: var(--secondary-color);
+    --front-color-700: var(--gray-color-500);
+    --front-color-800: var(--quinary-color);
+    --front-color-900: var(--color-white);
+    --front-color-1000: var(--blue-color-700);
+    --front-color-1100: var(--blue-color-800);
+    --front-color-1200: var(--blue-color-500);
+    --front-color-1300: var( --gray-color-100);
+    --front-color-1400: var(--blue-color-900);
+
+    // Border
+    --border-color-100: var(--secondary-color);
+    --border-color-200: var(--tertiary-color);
+    --border-color-300: var(--secondary-color);
+    --border-color-400: var(--quinary-color);
+    --border-color-500: var(-blue-color-500);
+    --border-color-600: var(--sakura-color);
+
+    //progress bar
+    --progress-color-200: var(--blue-color-500);
+    --progress-color-300: var(--gray-color-400);
+    --progress-color-400: var(--secondary-color);
+    --progress-color-500: var(--quinary-color);
+
+    // PWA specific colors
+    --pwa-install-bg: var(--blue-color);
+    --pwa-install-hover: #0056cc;
+    --pwa-status-online: var(--green-color);
+    --pwa-status-offline: #ff3b30;
+    --pwa-border-radius: 8px;
+    --pwa-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    // Font families
+    --font-family-serif: "Roboto Serif", serif;
+    --font-family-sans: "Nunito Sans", sans-serif;
+
+    // Safe area insets for PWA
+    --safe-area-inset-top: env(safe-area-inset-top);
+    --safe-area-inset-right: env(safe-area-inset-right);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+    --safe-area-inset-left: env(safe-area-inset-left);
+
+    --breakpoint-small: 340px;
+    --breakpoint-mobile: 420px;
+    --breakpoint-tablet: 720px;
+    --breakpoint-desktop: 1024px;
+}
+
+// ANCHOR: Responsive breakpoints (SCSS variables)
+$breakpoints: (
+    small: 340px,
+    mobile: 420px,
+    tablet: 720px,
+    desktop: 1024px
+);
+
+@mixin respond-up($name) {
+    $value: map.get($breakpoints, $name);
+    @if $value == null {
+        @warn "Unknown breakpoint `#{$name}`";
+    } @else {
+        @media (min-width: $value) {
+            @content;
+        }
+    }
+}
+
+@mixin respond-down($name) {
+    $value: map.get($breakpoints, $name);
+    @if $value == null {
+        @warn "Unknown breakpoint `#{$name}`";
+    } @else {
+        @media (max-width: $value) {
+            @content;
+        }
+    }
+}
+
+@mixin respond-between($from, $to) {
+    $min: map.get($breakpoints, $from);
+    $max: map.get($breakpoints, $to);
+    @if $min == null or $max == null {
+        @warn "Unknown breakpoint range `#{$from}` to `#{$to}`";
+    } @else {
+        @media (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    }
+}

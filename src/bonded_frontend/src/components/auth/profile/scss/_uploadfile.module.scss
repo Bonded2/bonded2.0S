@@ -1,0 +1,559 @@
+@use "@/style/variables" as *;
+
+.uploadFileContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    margin-top: 2.5rem;
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 24px;
+        margin-top: 2rem;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+        margin-top: 1.5rem;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        padding: 0 12px;
+        margin-top: 1rem;
+    }
+}
+
+.header {
+    margin-bottom: 40px;
+
+    // ANCHOR: Mobile responsive header
+    @include respond-down(tablet) {
+        margin-bottom: 32px;
+    }
+
+    @include respond-down(mobile) {
+        margin-bottom: 24px;
+    }
+
+    .superTitle {
+        font-size: 20px;
+        color: var(--front-color-400);
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .title {
+        font-size: 40px;
+        color: var(--front-color-400);
+        margin: 0;
+        font-family: var(--font-family-serif);
+        line-height: 1.2;
+
+        // ANCHOR: Mobile responsive title
+        @include respond-down(tablet) {
+            font-size: 38px;
+            line-height: 1.3;
+        }
+
+        @include respond-down(mobile) {
+            font-size: 35px;
+            line-height: 1.3;
+        }   
+    }
+}
+
+.uploadFileContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: -1.5rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        p {
+            font-size: 14px;
+            color: var(--front-color-400);
+            margin: 0;
+            line-height: 1.5;
+        }
+    }
+}
+
+.fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1.5rem;
+
+    .fileItem {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 10px;
+        border: 1px solid var(--border-color-400);
+        background-color: var(--background-color-300);
+        border-radius: 8px;
+        padding: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        .fileItemIcon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--front-color-600);
+            font-size: 14px;
+        }
+
+        .fileItemTitle {
+            color: var(--front-color-400);
+            font-size: 14px;
+            font-weight: 500;
+        }
+    }
+}
+
+.selectedFile {
+    margin-top: -1.5rem;
+
+    .selectedFileHeader {
+        p {
+            font-size: 14px;
+            color: var(--front-color-400);
+            margin: 0;
+            line-height: 1.5;
+        }
+    }
+}
+
+.uploadFileButton {
+    margin-top: 1.5rem;
+    
+    // Make button full width
+    button {
+        width: 100%;
+    }
+}
+
+.selectedFileContentContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    max-height: 50vh;
+    overflow-y: auto;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--background-color-300);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--front-color-600);
+        border-radius: 3px;
+
+        &:hover {
+            background: var(--front-color-500);
+        }
+    }
+
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: var(--front-color-600) var(--background-color-300);
+}
+
+// Uploaded file display styles
+.uploadedFileDisplay {
+    margin-top: 1.5rem;
+}
+
+.uploadedFileHeader {
+    margin-top: -3rem;
+}
+
+.uploadedFileCard {
+    background-color: var(--background-color-500);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color-300);
+    margin-top: 1.5rem;
+}
+
+.uploadedFileInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .uploadedFileInfoHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid var(--border-color-300);
+        padding: 10px 0;
+
+        .uploadedFileIcon {
+            color: var(--front-color-600);
+            display: inline-flex;
+            margin-right: 4px;
+        }
+
+        .uploadedFileName {
+            flex: 1 1 auto;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 8px;
+        }
+
+        @include respond-down(tablet) {
+            gap: 12px;
+        }
+
+        @include respond-down(mobile) {
+            gap: 8px;
+        }
+
+        .uploadedFileRemove {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            color: var(--front-color-600);
+            font-size: 14px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--primary-color-500);
+            }
+
+            @include respond-down(tablet) {
+                margin-top: -4px;
+            }
+
+            @include respond-down(mobile) {
+                margin-top: -2px;
+            }
+        }
+    }
+}
+
+.uploadedFileAddAnother {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--front-color-600);
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    border: none;
+    background-color: transparent;
+
+    @include respond-down(tablet) {
+        margin-top: 1.5rem;
+    }
+
+    @include respond-down(mobile) {
+        margin-top: 1rem;
+    }
+}
+
+.uploadedFileDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.uploadedFileName {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--front-color-700);
+    margin-bottom: 8px;
+}
+
+.uploadedFileMeta {
+    display: grid;
+    grid-template-columns: 1fr 1fr; // Issued | Issuing Country side by side
+    gap: 8px 24px;
+    align-items: center;
+}
+
+.uploadedFileDate,
+.uploadedFileCountry {
+    font-size: 11px;
+    color: var(--front-color-400);
+    line-height: 1.4;
+}
+
+
+.uploadedFileButton {
+    margin-top: 1.5rem;
+    
+    // Make button full width
+    button {
+        width: 100%;
+    }
+}
+
+.selectedFileContent {
+    margin-top: 1.5rem;
+    background-color: var(--background-color-500);
+    border-radius: 8px;
+    padding: 14px;
+
+    .selectedFileRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .selectedFileInfo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .selectedFileIcon {
+        color: var(--front-color-600);
+        font-size: 14px;
+    }
+
+    .selectedFileName {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--front-color-700);
+        font-size: 14px;
+    }
+
+    .selectedFileRemove {
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: var(--front-color-600);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .selectedFileRemove:hover {
+        text-decoration: underline;
+    }
+}
+
+.dropdownContainer {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    user-select: none;
+
+    div {
+        p {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--front-color-500);
+            font-weight: 600;
+        }
+    }
+}
+
+// ANCHOR: Date Picker Styles
+.datePickerContainer {
+    position: relative;
+    width: 100%;
+}
+
+.datePickerInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--background-color-100) !important;
+    border: 1px solid var(--border-color-300) !important;
+    border-radius: 4px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        border-color: var(--border-color-400) !important;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-color-200);
+    }
+}
+
+.dateDisplay {
+    color: var(--front-color-700) !important;
+    font-family: var(--font-family-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    flex: 1;
+    text-align: left;
+
+    &:empty::before {
+        content: "mm/dd/yyyy";
+        color: var(--front-color-500) !important;
+        opacity: 0.7;
+    }
+}
+
+.calendarIcon {
+    color: var(--front-color-500) !important;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.calendarWrapper {
+    position: static;
+    margin-top: 8px;
+    background-color: var(--background-color-100) !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 12px;
+    }
+}
+
+.nationalitiesButtonDual {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        gap: 14px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        gap: 12px;
+    }
+
+    @include respond-down(mobile) {
+        gap: 8px;
+    }
+
+    .nationalitiesButtonDualLeft {
+        width: 40%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        background-color: transparent;
+        margin-left: -38px;
+
+        // ANCHOR: Tablet responsive left button
+        @include respond-between(tablet, desktop) {
+            margin-left: -32px;
+            width: 38%;
+        }
+
+        // ANCHOR: Mobile responsive left button
+        @include respond-down(tablet) {
+            margin-left: -28px;
+            width: 35%;
+            gap: 3px;
+        }
+
+        @include respond-down(mobile) {
+            margin-left: -20px;
+            width: 32%;
+            gap: 2px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+
+            // ANCHOR: Mobile responsive icon
+            @include respond-down(tablet) {
+                width: 14px;
+                height: 14px;
+            }
+
+            @include respond-down(mobile) {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    }
+
+    .nationalitiesButtonDualRight {
+        width: 40%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        background-color: transparent;
+        margin-right: -38px;
+
+        // ANCHOR: Tablet responsive right button
+        @include respond-between(tablet, desktop) {
+            margin-right: -32px;
+            width: 38%;
+        }
+
+        // ANCHOR: Mobile responsive right button
+        @include respond-down(tablet) {
+            margin-right: -28px;
+            width: 35%;
+            gap: 3px;
+        }
+
+        @include respond-down(mobile) {
+            margin-right: -20px;
+            width: 32%;
+            gap: 2px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+
+            // ANCHOR: Mobile responsive icon
+            @include respond-down(tablet) {
+                width: 14px;
+                height: 14px;
+            }
+
+            @include respond-down(mobile) {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    }
+}

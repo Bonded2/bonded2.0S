@@ -1,0 +1,78 @@
+@use "@/style/variables" as *;
+
+.validationChecklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.validationItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+
+    // NOTE: Hover effect for better UX
+    &:hover {
+        transform: translateY(-1px);
+    }
+}
+
+// ANCHOR: Default state (unmet requirements)
+.validationItemDefault {
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--quinary-color);
+
+    &:hover {
+        box-shadow: 0 2px 8px rgba(192, 196, 255, 0.15);
+    }
+}
+
+// ANCHOR: Success state (met requirements)
+.validationItemSuccess {
+    background-color: var(--cyan-color-100);
+    border: 1px solid var(--cyan-color);
+}
+
+.checkIcon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+// ANCHOR: Default icon color (unmet requirements)
+.checkIconDefault {
+    color: var(--quinary-color);
+}
+
+// ANCHOR: Success icon color (met requirements)
+.checkIconSuccess {
+    color: var(--cyan-color);
+}
+
+.validationText {
+    color: var(--front-color-400);
+    font-family: var(--font-family-sans);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+// ANCHOR: Responsive adjustments
+@media (max-width: 420px) {
+    .validationItem {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .checkIcon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .validationText {
+        font-size: 13px;
+    }
+}

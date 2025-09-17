@@ -1,0 +1,535 @@
+@use "@/style/variables" as *;
+
+.breadcrumbItems {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    // Hide scrollbar for webkit browsers (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: none;
+
+    // Hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 12px;
+
+    .headerTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: start;
+        line-height: 1.2;
+
+        // ANCHOR: Desktop responsive
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet responsive
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile responsive
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile responsive
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        // ANCHOR: Extra small mobile
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+}
+
+.dateContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+    gap: 12px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    transform: scale(0.95);
+
+    .dateFrom {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .dateTo {
+        flex: 1;
+        min-width: 0;
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        gap: 16px;
+        padding: 12px;
+        transform: scale(1);
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        gap: 14px;
+        padding: 10px;
+        transform: scale(0.95);
+    }
+
+    // ANCHOR: Mobile responsive - Keep inline on mobile
+    @include respond-down(tablet) {
+        flex-direction: row;
+        gap: 8px;
+        padding: 8px;
+
+        .dateFrom,
+        .dateTo {
+            flex: 1;
+            min-width: 0;
+        }
+        transform: scale(0.9);
+    }
+
+    // ANCHOR: Small mobile responsive - Still keep inline
+    @include respond-down(mobile) {
+        flex-direction: row;
+        gap: 6px;
+        padding: 6px;
+
+        .dateFrom,
+        .dateTo {
+            flex: 1;
+            min-width: 0;
+        }
+        transform: scale(0.8);
+    }
+
+    // ANCHOR: Extra small mobile - Only stack if absolutely necessary
+    @include respond-down(small) {
+        flex-direction: row;
+        gap: 4px;
+        padding: 4px;
+
+        .dateFrom,
+        .dateTo {
+            flex: 1;
+            min-width: 0;
+        }
+        transform: scale(0.75);
+    }
+}
+
+.directMessageContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        gap: 20px;
+        padding: 16px;
+        max-width: 600px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        gap: 18px;
+        padding: 14px;
+        max-width: 550px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        gap: 16px;
+        padding: 12px;
+        max-width: 500px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        gap: 14px;
+        padding: 10px;
+        max-width: 450px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        gap: 12px;
+        padding: 8px;
+        max-width: 400px;
+    }
+}
+
+.directMessageItem {
+    background-color: var(--background-color-500);
+    width: 100%;
+    height: auto;
+    min-height: 96px;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        min-height: 110px;
+        padding: 18px;
+        gap: 18px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        min-height: 103px;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        min-height: 96px;
+        padding: 14px;
+        gap: 14px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        min-height: 88px;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        min-height: 80px;
+        padding: 10px;
+        gap: 10px;
+    }
+}
+
+.directMessageIcon {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    color: var(--blue-color-100);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        top: 20px;
+        left: 18px;
+        width: 18px;
+        height: 18px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        top: 19px;
+        left: 17px;
+        width: 17px;
+        height: 17px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        top: 18px;
+        left: 16px;
+        width: 16px;
+        height: 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        top: 16px;
+        left: 14px;
+        width: 14px;
+        height: 14px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        top: 14px;
+        left: 12px;
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.directMessageTitle {
+    color: var(--front-color-400);
+    font-size: 14px;
+    font-weight: 600;
+    position: absolute;
+    top: 18px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    height: 16px;
+    line-height: 16px;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        top: 20px;
+        left: 44px;
+        font-size: 15px;
+        height: 18px;
+        line-height: 18px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        top: 19px;
+        left: 42px;
+        font-size: 14px;
+        height: 17px;
+        line-height: 17px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        top: 18px;
+        left: 40px;
+        font-size: 13px;
+        height: 16px;
+        line-height: 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        top: 16px;
+        left: 36px;
+        font-size: 12px;
+        height: 14px;
+        line-height: 14px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        top: 14px;
+        left: 32px;
+        font-size: 11px;
+        height: 12px;
+        line-height: 12px;
+    }
+}
+
+.directMessageDate {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: var(--background-color-300);
+    width: 70px;
+    height: 18px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--front-color-400);
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        top: 18px;
+        right: 18px;
+        width: 75px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        top: 17px;
+        right: 17px;
+        width: 72px;
+        height: 19px;
+        font-size: 10px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        top: 16px;
+        right: 16px;
+        width: 70px;
+        height: 18px;
+        font-size: 10px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        top: 14px;
+        right: 14px;
+        width: 65px;
+        height: 16px;
+        font-size: 9px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        top: 12px;
+        right: 12px;
+        width: 60px;
+        height: 14px;
+        font-size: 8px;
+    }
+}
+
+.directMessageMessage {
+    font-size: 12px;
+    color: var(--front-color-1400);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+    position: absolute;
+    top: 48px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        top: 52px;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        font-size: 13px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        top: 50px;
+        left: 17px;
+        right: 17px;
+        bottom: 17px;
+        font-size: 12px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        top: 48px;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        font-size: 11px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        top: 44px;
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        font-size: 10px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        top: 40px;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        font-size: 9px;
+    }
+}
+
+.loadMoreButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    padding: 0 16px;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        margin-top: 20px;
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        margin-top: 18px;
+        padding: 0 18px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        margin-top: 16px;
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        margin-top: 14px;
+        padding: 0 14px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        margin-top: 12px;
+        padding: 0 12px;
+    }
+}

@@ -1,0 +1,254 @@
+@use "@/style/variables" as *;
+
+.wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 6px;
+    border-radius: 14px;
+    background-color: var(--background-color-500);
+
+    @include respond-down(tablet) {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 720px) {
+    .wrapper {
+        max-width: none;
+    }
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 28px 1fr 28px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.title {
+    text-align: center;
+    .year {
+        font: 600 15px/1 var(--font-family-sans);
+        color: var(--front-color-400);
+    }
+    .month {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        font: 700 16px/1 var(--font-family-sans);
+        color: var(--front-color-100);
+    }
+}
+
+.navBtn,
+.navBtnSm {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: var(--background-color-100);
+    color: var(--front-color-600);
+    cursor: pointer;
+    transition:
+        transform 0.08s ease,
+        background 0.15s ease;
+    &:hover {
+        background: var(--background-color-600);
+    }
+    &:active {
+        transform: translateY(1px);
+    }
+}
+.navBtnSm {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+}
+
+.weekRow,
+.row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px; /* use grid gap instead of per-cell margin */
+}
+.weekRow {
+    margin: 6px 0 4px;
+}
+.weekday {
+    text-align: center;
+    font: 600 11px/26px var(--font-family-sans);
+    color: var(--front-color-200);
+}
+
+.grid {
+    user-select: none;
+}
+
+/* --- constants --- */
+$gap: 6px;                /* same as your .row gap */
+$bridge: 3px;             /* half of gap for bridging */
+
+/* base cell */
+.cell {
+    position: relative;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    isolation: isolate;     /* ensures ::before sits under .dayNum */
+    overflow: visible;      /* allow blue layer to extend into gap */
+    transition:
+        background 0.12s ease,
+        color 0.12s ease,
+        box-shadow 0.12s ease;
+
+    &.outMonth {
+        color: var(--front-color-200);
+        opacity: 0.7;
+    }
+    &.inMonth {
+        color: var(--front-color-100);
+    }
+
+    &:hover:not(.disabled) {
+        background: var(--primary-color);
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        opacity: 0.35;
+    }
+
+    .dayNum { 
+        position: relative; 
+        z-index: 1;
+        font: 600 13px/1 var(--font-family-sans);
+    }
+}
+
+/* -------- SINGLE DAY (first click) -------- */
+.singleSelected::before,
+.rangeStart.rangeEnd::before {       /* start == end */
+    content: "";
+    position: absolute;
+    inset: 0;                          /* no bridging for circle */
+    background: var(--background-color-200);
+    border-radius: 50%;
+    z-index: 0;
+}
+.singleSelected .dayNum,
+.rangeStart.rangeEnd .dayNum { color: #fff; }
+
+/* -------- COMMITTED RANGE (pill) -------- */
+/* middle segment: extend left & right to bridge the gap */
+.inRange::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: -$bridge; right: -$bridge;   /* bridge the grid gap */
+    background: var(--background-color-200);
+    border-radius: 0;
+    z-index: 0;
+}
+
+/* left end */
+.rangeStart::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: -$bridge; right: 0;          /* bridge only the left side */
+    background: var(--background-color-200);
+    border-radius: 999px 0 0 999px;
+    z-index: 0;
+}
+
+/* right end */
+.rangeEnd::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: -$bridge;          /* bridge only the right side */
+    background: var(--background-color-200);
+    border-radius: 0 999px 999px 0;
+    z-index: 0;
+}
+
+/* make numbers white anywhere the pill passes */
+.inRange .dayNum,
+.rangeStart .dayNum,
+.rangeEnd .dayNum { color: #fff; }
+
+/* -------- OPTIONAL: HOVER PREVIEW (same bridging) -------- */
+.previewInRange::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: -$bridge; right: -$bridge;
+    background: var(--blue-color-500);
+    opacity: .25;
+    border-radius: 0;
+    z-index: 0;
+}
+.previewStart::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: -$bridge; right: 0;
+    background: var(--blue-color-500); opacity: .25; border-radius: 999px 0 0 999px; z-index: 0;
+}
+.previewEnd::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: -$bridge;
+    background: var(--blue-color-500); opacity: .25; border-radius: 0 999px 999px 0; z-index: 0;
+}
+.previewInRange .dayNum,
+.previewStart .dayNum,
+.previewEnd .dayNum { color: #fff; }
+
+.today {
+    outline: 2px solid var(--quinary-color);
+    outline-offset: -2px;
+}
+
+.footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.primary,
+.secondary {
+    height: 36px;
+    border-radius: 10px;
+    font: 700 13px/1 var(--font-family-sans);
+    border: none;
+}
+
+.primary {
+    background: var(--blue-color-200);
+    color: white;
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.secondary {
+    background: var(--front-color-300);
+    color: var(--front-color-400);
+}
+
+/* Optional polish for small screens (tighten padding, font sizes) */
+@media (max-width: 420px) {
+    .wrapper {
+        padding: 12px;
+    }
+    .weekday {
+        font-size: 10px;
+        line-height: 22px;
+    }
+    .title .year {
+        font-size: 14px;
+    }
+    .title .month {
+        font-size: 15px;
+    }
+}

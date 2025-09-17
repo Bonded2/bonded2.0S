@@ -1,0 +1,30 @@
+@use "@/style/variables" as *;
+
+.dots {
+    display: flex;
+    justify-content: flex-start;
+    gap: 6px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: var(--progress-color-500);
+        transition:
+            background 0.25s ease,
+            transform 0.25s ease,
+            width 0.25s ease,
+            border-radius 0.25s ease;
+
+        &.active {
+            width: 24px;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--progress-color-400);
+            transform: none;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+@use "@/style/variables" as *;
+
+.dashboardPage {
+    position: fixed;
+    top: 10vh;
+    bottom: 12vh;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: var(--background-color-100);
+}

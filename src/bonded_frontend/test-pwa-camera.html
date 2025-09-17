@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Camera Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        #video {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .camera-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 PWA Camera Validation Test</h1>
+
+    <div class="test-section">
+        <h2>📱 PWA Compatibility Check</h2>
+        <div id="pwa-status"></div>
+        <button onclick="checkPWACompatibility()">Check PWA Support</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📷 Camera Access Test</h2>
+        <div id="camera-status"></div>
+        <button onclick="testCameraAccess()">Test Camera Access</button>
+        <button onclick="stopCamera()" id="stop-btn" disabled>Stop Camera</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🎥 Camera Preview</h2>
+        <div class="camera-container">
+            <video id="video" autoplay playsinline muted style="display: none;"></video>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 Validation Test</h2>
+        <div id="validation-status"></div>
+        <button onclick="testValidation()" id="validate-btn" disabled>Test Validation</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Test Results</h2>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        let stream = null;
+        let video = document.getElementById('video');
+
+        function addStatus(elementId, message, type = 'success') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function addResult(message) {
+            const element = document.getElementById('test-results');
+            element.innerHTML += `<div>${message}</div>`;
+        }
+
+        function checkPWACompatibility() {
+            const tests = [
+                { name: 'Service Worker', test: () => 'serviceWorker' in navigator },
+                { name: 'Camera API', test: () => navigator.mediaDevices && navigator.mediaDevices.getUserMedia },
+                { name: 'Canvas Support', test: () => document.createElement('canvas').getContext },
+                { name: 'ImageData Support', test: () => window.ImageData },
+                { name: 'HTTPS Context', test: () => location.protocol === 'https:' || location.hostname === 'localhost' },
+                { name: 'PWA Display Mode', test: () => window.matchMedia('(display-mode: standalone)').matches }
+            ];
+
+            let results = [];
+            tests.forEach(test => {
+                const result = test.test();
+                results.push(`${result ? '✅' : '❌'} ${test.name}`);
+            });
+
+            const passed = tests.filter(t => t.test()).length;
+            const total = tests.length;
+
+            addStatus('pwa-status', `
+                <strong>PWA Compatibility: ${passed}/${total} tests passed</strong><br>
+                ${results.join('<br>')}
+            `, passed === total ? 'success' : 'warning');
+        }
+
+        async function testCameraAccess() {
+            try {
+                addStatus('camera-status', 'Requesting camera access...', 'warning');
+
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: "user",
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                });
+
+                video.srcObject = stream;
+                video.style.display = 'block';
+
+                addStatus('camera-status', '✅ Camera access granted!', 'success');
+                document.getElementById('stop-btn').disabled = false;
+                document.getElementById('validate-btn').disabled = false;
+
+                addResult('✅ Camera access test passed');
+
+            } catch (error) {
+                addStatus('camera-status', `❌ Camera access failed: ${error.message}`, 'error');
+                addResult(`❌ Camera access test failed: ${error.message}`);
+            }
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+                video.srcObject = null;
+                video.style.display = 'none';
+
+                addStatus('camera-status', 'Camera stopped', 'warning');
+                document.getElementById('stop-btn').disabled = true;
+                document.getElementById('validate-btn').disabled = true;
+            }
+        }
+
+        async function testValidation() {
+            if (!stream || !video.videoWidth) {
+                addStatus('validation-status', '❌ Camera not ready', 'error');
+                return;
+            }
+
+            try {
+                addStatus('validation-status', 'Running validation...', 'warning');
+
+                // Simple validation test
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+
+                // Basic lighting analysis
+                let sum = 0;
+                for (let i = 0; i < data.length; i += 4) {
+                    const y = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
+                    sum += y;
+                }
+                const mean = sum / (data.length / 4);
+
+                const lightingOK = mean >= 90 && mean <= 200;
+
+                addStatus('validation-status', `
+                    ✅ Validation test completed!<br>
+                    <strong>Lighting Analysis:</strong><br>
+                    Mean luminance: ${mean.toFixed(1)}<br>
+                    Lighting OK: ${lightingOK ? '✅' : '❌'}
+                `, 'success');
+
+                addResult(`✅ Validation test passed - Mean luminance: ${mean.toFixed(1)}`);
+
+            } catch (error) {
+                addStatus('validation-status', `❌ Validation failed: ${error.message}`, 'error');
+                addResult(`❌ Validation test failed: ${error.message}`);
+            }
+        }
+
+        // Auto-run PWA compatibility check on load
+        window.onload = () => {
+            checkPWACompatibility();
+        };
+    </script>
+</body>
+
+</html>

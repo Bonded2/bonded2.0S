@@ -1,0 +1,117 @@
+@use '@/style/variables' as *;
+
+.landing {
+  width: 100vw;
+  height: 100vh;
+  min-height: 640px;
+  background-color: var( --background-color-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+
+  // PWA safe area support
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+
+  // ANCHOR: Tablet (720px - 1024px)
+  @include respond-between(tablet, desktop) {
+    max-width: 540px;
+  }
+
+
+  img {
+    max-width: min(200px, 50vw);
+    max-height: min(200px, 30vh);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    min-width: 120px;
+    min-height: 120px;
+    transition: opacity 0.3s ease;
+
+    // ANCHOR: Tablet (720px - 1024px)
+    @include respond-between(tablet, desktop) {
+      max-width: 240px;
+      max-height: 240px;
+      min-width: 140px;
+      min-height: 140px;
+    }
+  }
+}
+
+// ANCHOR: Loading container styles
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  animation: fadeIn 0.5s ease-in-out;
+
+  // Mobile responsive adjustments
+  @media (max-width: 480px) {
+    margin-top: 8px;
+  }
+}
+
+// ANCHOR: Logo specific styles
+.logo {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// ANCHOR: Fade in animation for loading
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ANCHOR: Android device optimizations (360x640)
+@media (max-width: 360px) {
+  .container img {
+    max-width: 140px;
+    max-height: 140px;
+    min-width: 100px;
+    min-height: 100px;
+  }
+}
+
+// ANCHOR: iPhone and larger Android devices
+@media (min-width: 361px) and (max-width: 414px) {
+  .container img {
+    max-width: 180px;
+    max-height: 180px;
+  }
+}
+
+// ANCHOR: Large devices (iPhone Plus, Pixel XL)
+@media (min-width: 415px) {
+  .container img {
+    max-width: 220px;
+    max-height: 220px;
+  }
+}

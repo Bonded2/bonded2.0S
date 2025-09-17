@@ -1,0 +1,468 @@
+@use "@/style/variables" as *;
+
+.residenciesContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    margin-top: 2.5rem;
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 24px;
+        margin-top: 2rem;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+        margin-top: 1.5rem;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        padding: 0 12px;
+        margin-top: 1rem;
+    }
+}
+
+.header {
+    margin-bottom: 40px;
+
+    // ANCHOR: Mobile responsive header
+    @include respond-down(tablet) {
+        margin-bottom: 32px;
+    }
+
+    @include respond-down(mobile) {
+        margin-bottom: 24px;
+    }
+
+    .superTitle {
+        font-size: 20px;
+        color: var(--front-color-400);
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .title {
+        font-size: 40px;
+        color: var(--front-color-400);
+        margin: 0;
+        font-family: var(--font-family-serif);
+        line-height: 1.2;
+
+        // ANCHOR: Mobile responsive title
+        @include respond-down(tablet) {
+            font-size: 38px;
+            line-height: 1.3;
+        }
+
+        @include respond-down(mobile) {
+            font-size: 35px;
+            line-height: 1.3;
+        }
+    }
+}
+
+.residenciesContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: -1.5rem;
+
+    p {
+        font-size: 14px;
+        color: var(--front-color-400);
+        margin: 0;
+    }
+
+    .residenciesInput {
+        margin-top: 18px;
+    }
+
+    .residenciesDescription {
+        margin-top: 12px;
+        font-size: 14px;
+        color: var(--front-color-400);
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .otherResidenciesInput {
+        margin-top: 18px;
+    }
+}
+
+.addOtherResidency {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--front-color-500);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    user-select: none;
+    margin-top: 12px;
+}
+
+.residenciesButton {
+    margin-top: 20px;
+    
+    // Make button full width
+    button {
+        width: 100%;
+    }
+}
+
+// ANCHOR: Navigation buttons container
+.nationalitiesButton {
+    margin-top: 20px;
+}
+
+// ANCHOR: Button dual container
+.nationalitiesButtonDual {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        gap: 14px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        gap: 12px;
+    }
+
+    @include respond-down(mobile) {
+        gap: 8px;
+    }
+
+    .nationalitiesButtonDualLeft {
+        width: 40%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        background-color: transparent;
+        margin-left: -38px;
+
+        // ANCHOR: Tablet responsive left button
+        @include respond-between(tablet, desktop) {
+            margin-left: -32px;
+            width: 38%;
+        }
+
+        // ANCHOR: Mobile responsive left button
+        @include respond-down(tablet) {
+            margin-left: -28px;
+            width: 35%;
+            gap: 3px;
+        }
+
+        @include respond-down(mobile) {
+            margin-left: -20px;
+            width: 32%;
+            gap: 2px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+
+            // ANCHOR: Mobile responsive icon
+            @include respond-down(tablet) {
+                width: 14px;
+                height: 14px;
+            }
+
+            @include respond-down(mobile) {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    }
+}
+
+// ANCHOR: Edit residency container
+.editResidency {
+    margin-top: -1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        gap: 14px;
+    }
+
+    @include respond-down(mobile) {
+        gap: 12px;
+    }
+}
+
+// ANCHOR: Primary residence section
+.primaryResidence {
+    background-color: var(--background-color-500);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 18px;
+    }
+
+    @include respond-down(mobile) {
+        padding: 16px;
+    }
+
+    .primaryResidenceHeader {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+
+        svg {
+            color: var(--front-color-600);
+            width: 20px;
+            height: 20px;
+            stroke-width: 1.5;
+
+            // ANCHOR: Mobile responsive icon
+            @include respond-down(tablet) {
+                width: 18px;
+                height: 18px;
+            }
+
+            @include respond-down(mobile) {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0;
+
+            // ANCHOR: Mobile responsive title
+            @include respond-down(tablet) {
+                font-size: 15px;
+            }
+
+            @include respond-down(mobile) {
+                font-size: 14px;
+            }
+        }
+    }
+
+    div:last-child {
+        p {
+            font-size: 14px;
+            color: #1f2937;
+            margin: 0;
+            line-height: 1.4;
+
+            // ANCHOR: Mobile responsive text
+            @include respond-down(tablet) {
+                font-size: 13px;
+            }
+
+            @include respond-down(mobile) {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+// ANCHOR: Other residencies section
+.otherResidencies {
+    background-color: var(--background-color-500);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 18px;
+    }
+
+    @include respond-down(mobile) {
+        padding: 16px;
+    }
+
+    .otherResidenciesHeader {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .otherResidenciesHeaderTitle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 8px;
+        margin: 0 -20px 0 -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        // ANCHOR: Mobile responsive padding
+        @include respond-down(tablet) {
+            margin: 0 -18px 0 -18px;
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        @include respond-down(mobile) {
+            margin: 0 -16px 0 -16px;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        svg {
+            color: var(--front-color-600);
+            width: 20px;
+            height: 20px;
+            stroke-width: 1.5;
+
+            // ANCHOR: Mobile responsive icon
+            @include respond-down(tablet) {
+                width: 18px;
+                height: 18px;
+            }
+
+            @include respond-down(mobile) {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+
+            // ANCHOR: Mobile responsive title
+            @include respond-down(tablet) {
+                font-size: 15px;
+            }
+
+            @include respond-down(mobile) {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .editButton {
+        background: none;
+        border: none;
+        color: var(--front-color-600);
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+        padding: 0;
+        text-decoration: underline;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.7;
+        }
+
+        // ANCHOR: Mobile responsive button
+        @include respond-down(tablet) {
+            font-size: 13px;
+        }
+
+        @include respond-down(mobile) {
+            font-size: 12px;
+        }
+    }
+
+    .otherResidenciesItem {
+        margin-bottom: 4px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #1f2937;
+            margin: 0;
+            line-height: 1.4;
+
+            // ANCHOR: Mobile responsive text
+            @include respond-down(tablet) {
+                font-size: 13px;
+            }
+
+            @include respond-down(mobile) {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+// ANCHOR: Button dual right
+.nationalitiesButtonDualRight {
+    width: 40%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background-color: transparent;
+    margin-right: -38px;
+
+    // ANCHOR: Tablet responsive right button
+    @include respond-between(tablet, desktop) {
+        margin-right: -32px;
+        width: 38%;
+    }
+
+    // ANCHOR: Mobile responsive right button
+    @include respond-down(tablet) {
+        margin-right: -28px;
+        width: 35%;
+        gap: 3px;
+    }
+
+    @include respond-down(mobile) {
+        margin-right: -20px;
+        width: 32%;
+        gap: 2px;
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+
+        // ANCHOR: Mobile responsive icon
+        @include respond-down(tablet) {
+            width: 14px;
+            height: 14px;
+        }
+
+        @include respond-down(mobile) {
+            width: 12px;
+            height: 12px;
+        }
+    }
+}

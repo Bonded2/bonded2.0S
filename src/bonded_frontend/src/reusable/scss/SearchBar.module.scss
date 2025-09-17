@@ -1,0 +1,125 @@
+@use "@/style/variables" as *;
+
+.searchBarContainer {
+  display: flex;
+  justify-content: flex-start; 
+  width: 100%;
+  padding: 0; 
+  background-color: transparent;
+}
+
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: none; 
+  background-color: var(--background-color-100) !important;
+  border: 1px solid var(--border-color-300) !important;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+
+  &:focus-within {
+    box-shadow: 0 0 0 2px rgba(105, 125, 255, 0.1);
+  }
+}
+
+.searchInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: none !important;
+  outline: none;
+  background-color: transparent !important;
+  color: var(--front-color-400) !important;
+  font-family: var(--font-family-sans);
+  font-size: 16px;
+  line-height: 1.5;
+
+  // ANCHOR: Placeholder styling to use front-color-500
+  &::placeholder {
+    color: var(--front-color-500) !important;
+    opacity: 1;
+  }
+
+  // ANCHOR: Remove default input styling
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+}
+
+.searchIconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  // ANCHOR: Hover state for better interactivity
+  &:hover {
+    background-color: rgba(105, 125, 255, 0.1);
+  }
+
+  &:active {
+    background-color: rgba(105, 125, 255, 0.2);
+  }
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--front-color-500) !important; // Use front-color-500 for icon
+  transition: color 0.2s ease;
+
+  // ANCHOR: Icon color change on hover
+  .searchIconButton:hover & {
+    color: var(--secondary-color) !important;
+  }
+}
+
+// ANCHOR: Responsive design
+@media (max-width: 420px) {
+  .searchBarContainer {
+    padding: 0; // Keep padding 0 for mobile too
+  }
+
+  .searchInput {
+    font-size: 16px; // Prevent zoom on iOS
+    padding: 10px 14px;
+  }
+
+  .searchIconButton {
+    padding: 10px 14px;
+  }
+
+  .searchIcon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// ANCHOR: Dark mode support (if needed in future)
+@media (prefers-color-scheme: dark) {
+  .searchBar {
+    background-color: var(--gray-color-400);
+    border-color: var(--gray-color-200);
+  }
+
+  .searchInput {
+    color: var(--color-white);
+
+    &::placeholder {
+      color: var(--gray-color-200);
+    }
+  }
+
+  .searchIcon {
+    color: var(--gray-color-200);
+  }
+}

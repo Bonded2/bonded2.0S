@@ -1,0 +1,126 @@
+@use "@/style/variables" as *;
+
+.email {
+    font-family: var(--font-family-sans, Arial, sans-serif);
+    color: var(--front-color-100);
+    background: var(--background-color-500);
+    padding: 24px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+
+    > * {
+        max-width: 600px;
+        margin-inline: auto;
+    }
+}
+
+.hero {
+    background: var(--background-color-1100);
+    padding: 28px 24px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.title {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gray-color-500);
+}
+
+.subtitle {
+    margin: 0;
+    color: var(--front-color-1300);
+    font-size: 14px;
+}
+
+.hl {
+    background: #ffe59a;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.hlDark {
+    background: #ffe59a;
+    color: var(--gray-color-500);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.body {
+    padding: 24px;
+    margin-top: 16px;
+}
+
+.greeting {
+    margin: 0 0 16px 0;
+    color: var(--gray-color-500);
+    font-weight: 600;
+}
+
+.cta {
+    display: inline-block;
+    margin: 18px auto 14px;
+    padding: 12px 22px;
+    border-radius: 6px;
+    background: var(--secondary-color);
+    color: var(--color-white);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    &:hover {
+        background: var(--blue-color-200);
+    }
+}
+
+.fallback {
+    margin-top: 18px;
+    padding: 16px;
+    border: 1px solid var(--border-color-200);
+    background: var(--front-color-300);
+    border-radius: 6px;
+}
+.fallbackLabel {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+.link {
+    word-break: break-all;
+    color: var(--blue-color);
+    text-decoration: underline;
+}
+
+.afterJoin {
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 18px;
+    background: var(--background-color-800);
+    color: var(--front-color-50);
+    text-align: center;
+    padding: 24px 20px;
+    border-radius: 8px;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.tagline {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.footLinks {
+    display: inline-flex;
+    gap: 10px;
+    a {
+        color: var(--front-color-50);
+        text-decoration: none;
+        font-size: 13px;
+    }
+}

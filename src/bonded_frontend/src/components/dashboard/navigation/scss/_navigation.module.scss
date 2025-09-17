@@ -1,0 +1,93 @@
+@use "@/style/variables" as *;
+
+.navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    min-height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .navigationContent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--background-color-800);
+        border-radius: 34px;
+        padding: 0 20px;
+        height: 8vh;
+        width: 100%;
+        max-width: 358px;
+        box-sizing: border-box;
+
+        .navList {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+
+            .navListItem {
+                display: flex;
+                justify-content: center;
+            }
+
+            .navItem {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                color: var(--front-color-900);
+                text-decoration: none;
+                transition:
+                    background-color 0.2s ease,
+                    transform 0.1s ease;
+            }
+
+            .navIcon {
+                width: 24px;
+                height: 24px;
+                stroke-width: 2px;
+            }
+
+            .active {
+                background-color: var(--background-color-900);
+            }
+        }
+    }
+}
+
+// ANCHOR: Responsive adjustments (mobile-first)
+@include respond-up(tablet) {
+    .navigation {
+        min-height: 10vh;
+    }
+
+    .navigation .navigationContent {
+        padding: 0 24px;
+        height: 7.5vh;
+        max-width: 520px;
+        border-radius: 36px;
+    }
+}
+
+@include respond-up(desktop) {
+    .navigation {
+        min-height: 10vh;
+    }
+
+    .navigation .navigationContent {
+        padding: 0 28px;
+        height: 72px;
+        max-width: 680px;
+        border-radius: 40px;
+    }
+}

@@ -1,0 +1,30 @@
+@use "@/style/variables" as *;
+
+.spinner {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.bar {
+  position: absolute;
+  left: 22px; 
+  top: 2px;
+  width: 4px;
+  height: 12px;
+  background-color: var(--secondary-color);
+  border-radius: 2px;
+  transform-origin: center 22px;
+  animation: fade 1.2s linear infinite;
+}
+
+@for $i from 1 through 12 {
+  .bar:nth-child(#{$i}) {
+    animation-delay: -#{(1.2s / 12) * ($i - 1)};
+  }
+}
+
+@keyframes fade {
+  0%, 39%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}

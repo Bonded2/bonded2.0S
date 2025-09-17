@@ -1,0 +1,65 @@
+@use "./_variables.scss";
+@use "./_pwa.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// ANCHOR: Base PWA styles
+body {
+    font-family: var(--font-family-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background-color-100);
+    color: var(--front-color-100);
+}
+
+// PWA safe area support
+#root {
+    padding-top: var(--safe-area-inset-top);
+    padding-right: var(--safe-area-inset-right);
+    padding-bottom: var(--safe-area-inset-bottom);
+    padding-left: var(--safe-area-inset-left);
+    min-height: 100vh;
+}
+
+// NOTE: PWA-specific styles are now in _pwa.scss
+
+// ANCHOR: PWA specific media queries
+@media (display-mode: standalone) {
+    // Styles specific to PWA mode
+    body {
+        user-select: none; // Prevent text selection in PWA mode
+        -webkit-touch-callout: none; // Disable callout on iOS
+    }
+
+    // Hide browser-specific elements in PWA mode
+    .browser-only {
+        display: none !important;
+    }
+}
+
+@media (display-mode: browser) {
+    // Hide PWA-specific elements in browser mode
+    .pwa-only {
+        display: none !important;
+    }
+}
+
+// ANCHOR: Touch-friendly styles for mobile PWA
+@media (max-width: 768px) {
+    .pwa-install-button {
+        padding: 16px 32px;
+        font-size: 18px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .pwa-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}

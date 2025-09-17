@@ -1,0 +1,299 @@
+@use "@/style/_variables.scss" as *;
+
+.promptRoot {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   height: 100vh;
+   z-index: 9999;
+}
+
+.promptCard {
+    background: var(--background-color-500);
+    color: var(--front-color-400);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+.iconWrap {
+    margin-bottom: 12px;
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 8px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+}
+
+.content {
+    text-align: center;
+    margin-bottom: 16px;
+
+    h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    p {
+        margin: 0;
+        font-size: 14px;
+        opacity: 0.9;
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+}
+
+.dismissBtn,
+.installBtn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.2s ease;
+    min-height: 44px;
+}
+
+.dismissBtn {
+    background: transparent;
+    color: var(--front-color-400);
+    border: 1px solid var(--border-color-200);
+}
+.dismissBtn:hover {
+    background: var(--front-color-300);
+}
+
+.installBtn {
+    background: var(--secondary-color);
+    color: var(--color-white);
+}
+.installBtn:hover {
+    background: var(--blue-color-100);
+}
+.installBtn:disabled {
+    background: var(--front-color-200);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* iOS guide */
+.iosOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.iosGuide {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.iosHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e9ecef;
+}
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+    border-radius: 4px;
+}
+.closeBtn:hover {
+    background: #f8f9fa;
+}
+
+.iosSteps {
+    margin-bottom: 24px;
+}
+.iosStep {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+.active {
+    background: #e3f2fd;
+    border-color: var(--secondary-color);
+}
+.completed {
+    background: #e8f5e8;
+    border-color: #4caf50;
+}
+.stepNumber {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+.completed .stepNumber {
+    background: #4caf50;
+}
+.stepIcon {
+    font-size: 24px;
+}
+.stepContent {
+    flex: 1;
+}
+.stepContent h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #333;
+}
+.stepContent p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.iosActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+.prevBtn,
+.nextBtn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    min-width: 100px;
+}
+.prevBtn {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid #dee2e6;
+}
+.prevBtn:hover {
+    background: #e9ecef;
+}
+.nextBtn {
+    background: var(--secondary-color);
+    color: var(--color-white);
+}
+.nextBtn:hover {
+    background: var(--blue-color-100);
+}
+
+@media (max-width: 480px) {
+    .promptRoot {
+        width: 95%;
+        bottom: 10px;
+    }
+    .promptCard {
+        padding: 12px;
+    }
+    .iconWrap {
+        width: 50px;
+        height: 50px;
+    }
+    .iconWrap img {
+        width: 40px;
+        height: 40px;
+    }
+    .content h3 {
+        font-size: 16px;
+    }
+    .content p {
+        font-size: 12px;
+    }
+    .iosGuide {
+        margin: 10px;
+        padding: 20px;
+    }
+    .iosStep {
+        gap: 12px;
+        padding: 12px;
+    }
+    .stepNumber {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}

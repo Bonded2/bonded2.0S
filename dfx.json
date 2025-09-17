@@ -1,0 +1,44 @@
+{
+  "canisters": {
+    "bonded_backend": {
+      "candid": "src/bonded_backend/bonded_backend.did",
+      "package": "bonded_backend",
+      "wasm": "target/wasm32-unknown-unknown/release/bonded_backend.wasm",
+      "type": "rust"
+    },
+    "internet_identity": {
+      "type": "custom",
+      "candid": "https://github.com/dfinity/internet-identity/releases/download/release-2025-03-07-v2/internet_identity.did",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/download/release-2025-03-07-v2/internet_identity_dev.wasm.gz",
+      "init_arg": "(opt record { captcha_config = opt record { max_unsolved_captchas= 50:nat64; captcha_trigger = variant {Static = variant {CaptchaDisabled}}}})",
+      "specified_id": "rdmx6-jaaaa-aaaaa-aaadq-cai",
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai",
+          "playground": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "frontend": {
+        "entrypoint": "src/bonded_frontend/dist/index.html"
+      }
+    },
+    "bonded_frontend": {
+      "dependencies": [
+        "bonded_backend"
+      ],
+      "source": [
+        "src/bonded_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "bonded_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "mops sources"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
