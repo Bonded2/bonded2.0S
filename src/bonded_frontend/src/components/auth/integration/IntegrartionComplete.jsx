@@ -1,13 +1,16 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import styles from './scss/_integrationcomplete.module.scss'
 import { useNavigate } from 'react-router-dom'
 import Button from '@/reusable/Button'
 import { useAppSelector } from '@/store/hooks'
 import { MessageCircle, Mail, Users, Video, Image, MapPin, ArrowLeft, ArrowRight } from 'lucide-react'
+import { getIdentity } from '../../../services/ii'
 
 const IntegrartionComplete = () => {
     const navigate = useNavigate();
     const { directMessage, email, socialMedia, videoCalls, photo, location } = useAppSelector((state) => state.integration);
+    const [isIntegrating, setIsIntegrating] = useState(null)
+    const [isSkipping, setIsSkipping] = useState(null)
 
     const mapSelectedNames = (platforms, services) => {
         return useMemo(() => {
@@ -25,6 +28,28 @@ const IntegrartionComplete = () => {
     const selectedEmail = mapSelectedNames(email.emailChatPlatform, email.emailServices);
     const selectedSM = mapSelectedNames(socialMedia.socialMediaChatPlatform, socialMedia.socialMediaServices);
     const selectedVC = mapSelectedNames(videoCalls.videoCallsChatPlatform, videoCalls.videoCallsServices);
+
+    const handleIntegrate = async () => {
+            setIsIntegrating(true)
+            
+            try {
+                const { identity: userIdentity, authenticatedActor } = await getIdentity()
+                
+                const userdata = await authenticatedActor.update_user_status()
+    
+                if (userdata.Ok) {
+
+                    navigate('/wizard/integration-pending')
+                }
+    
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setTimeout(() => {
+                    setIsIntegrating(false)
+                }, 120)
+            }
+        }
 
     return (
         <div className={styles.integrationCompleteContainer}>
@@ -198,9 +223,10 @@ const IntegrartionComplete = () => {
                     <Button
                         variant="primary"
                         className={styles.completeButton}
-                        onClick={() => navigate('/wizard/integration-pending')}
+                        onClick={handleIntegrate}
+                        disabled={isIntegrating}
                     >
-                        Next
+                        {isIntegrating ? ('Integrating') : ('Next')}
                     </Button>
                 </div>
                 <div className={styles.navigationButtonsDual}>
@@ -215,7 +241,7 @@ const IntegrartionComplete = () => {
                     <Button
                         variant="secondary"
                         className={styles.navigationButtonRight}
-                        onClick={() => navigate('/wizard/integration-pending')}
+                        onClick={handleIntegrate}
                     >
                         Skip
                         <ArrowRight />

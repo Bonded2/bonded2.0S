@@ -4,10 +4,12 @@ import ValidationChecklist from '@/reusable/ValidationChecklist'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react';
 import Button from '@/reusable/Button'
+import { Session } from '../../../routes/SessionProvider';
 
 const Kyc = () => {
     const navigate = useNavigate()
     const [verifyMethod, setVerifyMethod] = useState(false)
+    const {userData} = Session()
     const validationRules = [
         {
             text: 'Step one: Prove your identity',
@@ -38,12 +40,32 @@ const Kyc = () => {
                                 </p>
                             </div>
                             <div className={styles.kycButton}>
-                                <Button
-                                    variant="primary"
-                                    onClick={() => navigate('/wizard/bond-invitation')}
-                                >
-                                    Continue
-                                </Button>
+                                {userData.status === 'Single' && (
+                                    <Button
+                                        variant='primary'
+                                        onClick={() => navigate('/wizard/bond-invitation')}
+                                    >
+                                        Continue
+                                    </Button>
+                                )}
+
+                                {userData.status === 'Complicated' && (
+                                    <Button
+                                        variant='primary'
+                                        onClick={() => navigate('/wizard/bond-pending')}
+                                    >
+                                        Continue
+                                    </Button>
+                                )}
+
+                                {userData.status === 'Bonded' && (
+                                    <Button
+                                        variant='primary'
+                                        onClick={() => navigate('/dashboard')}
+                                    >
+                                        Go to Dashboard
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     ) : (
@@ -66,7 +88,7 @@ const Kyc = () => {
                                 </Button>
                                 <Button
                                     variant="secondary"
-                                    onClick={() => navigate('/wizard/passport')}>
+                                    onClick={() => navigate('/wizard/complete-profile')}>
                                     <ArrowLeft size={16} />
                                     back
                                 </Button>

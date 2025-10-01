@@ -84,6 +84,43 @@
         margin-top: 20px;
     }
 
+    // ANCHOR: Dropdown container with remove button
+    .dropdownContainer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+
+        .searchBar {
+            flex: 1;
+            margin-top: 0;
+        }
+    }
+
+    .removeNationalityButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--front-color-500);
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+        padding: 4px;
+        border-radius: 4px;
+        flex-shrink: 0;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover {
+            opacity: 0.7;
+            background-color: var(--background-color-200);
+        }
+    }
+
     .addNationalityButton {
         display: flex;
         align-items: center;
@@ -101,6 +138,57 @@
         svg {
             width: 16px;
             height: 16px;
+        }
+    }
+
+    // ANCHOR: Selected nationality display (before saving)
+    .selectedNationalityDisplay {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+        background-color: var(--secondary-color);
+        border-radius: 8px;
+        flex: 1;
+
+        .selectedCode {
+            color: var(--color-white);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            min-width: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .selectedName {
+            flex: 1;
+            color: var(--color-white);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .removeNationalityButton {
+            background: transparent;
+            border: none;
+            color: var(--color-white);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+            flex-shrink: 0;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
         }
     }
 
@@ -159,10 +247,21 @@
     .savedNationalityContent {
         padding: 12px 18px;
         display: flex;
-        gap: 12px;
+        flex-direction: column;
+        gap: 8px;
         color: var(--front-color-400);
         font-size: 14px;
         font-weight: 500;
+    }
+
+    .savedNationalityItem {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .savedNationalityFlag {
+        font-size: 18px;
     }
 
     .savedNationalityName {

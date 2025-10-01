@@ -2,44 +2,70 @@ import React from 'react'
 import styles from './scss/_nationalities.module.scss'
 import DotsWizard from '@/components/wizard/DotsWizard'
 import Dropdown from '@/reusable/Dropdown'
-import { Plus, ArrowLeft, ArrowRight, Flag } from 'lucide-react';
+import { Plus, ArrowLeft, ArrowRight, Flag, X } from 'lucide-react';
 import Button from '@/reusable/Button';
 import { NationalitiesFunction } from './NationalitiesFunction';
 import { useState, useEffect } from 'react'
+import { getIdentity } from '../../../services/ii';
+import { selectNationality } from '../../../store/slices/profileSlice';
 
 const Nationalities = () => {
   const {
-    searchTerm,
-    setSearchTerm,
-    selectedNationality,
+    dropdowns,
+    selectedNationalities,
     isSaved,
     handleNavigateToStep,
     handleNationalitySelect,
+    handleAddDropdown,
+    handleRemoveDropdown,
     handleSave,
     handleEdit,
+    handleSetSearchTerm,
     country,
     navigate
   } = NationalitiesFunction();
 
+  const [isUpdating, setIsUpdating] = useState(null)
   const [storedNationalitiesData, setStoredNationalitiesData] = useState({})
-      
+
   useEffect(() => {
     const data = localStorage.getItem('nationalitiesData')
-      if (data) {
-    try {
-      setStoredNationalitiesData(JSON.parse(data))
-    } catch {
-      setStoredNationalitiesData({})
+    if (data) {
+      try {
+        setStoredNationalitiesData(JSON.parse(data))
+      } catch {
+        setStoredNationalitiesData({})
+      }
     }
-  }
   }, [])
-    
-  const handleNext = () => {
-    localStorage.setItem(
-      'nationalitiesData',
-      JSON.stringify({ selectedNationality })
-    )
-    navigate('/wizard/residencies')
+
+  const handleNext = async () => {
+    setIsUpdating(true)
+    try {
+      const auth = await getIdentity()
+
+      const { identity: userIdentity, authenticatedActor } = auth
+
+      // Join all nationalities with comma
+      const nationalitiesString = selectedNationalities.map(n => n.name).join(', ')
+
+      const userdata = await authenticatedActor.update_user_nationality(nationalitiesString)
+
+      if (userdata.Ok) {
+        localStorage.setItem(
+          'nationalitiesData',
+          JSON.stringify({ selectedNationalities })
+        )
+        navigate('/wizard/residencies')
+      }
+
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setTimeout(() =>
+        setIsUpdating(false), 800
+      )
+    }
   }
 
   return (
@@ -64,21 +90,52 @@ const Nationalities = () => {
 
         {!isSaved ? (
           <>
-            <Dropdown
-              options={country}
-              value={searchTerm}
-              onChange={setSearchTerm}
-              onSelect={handleNationalitySelect}
-              placeholder="Search"
-              searchable={true}
-              className={styles.searchBar}
-              maxHeight="200px"
-              showSearchIcon={true}
-              showLeftFlag={false}
-            />
+            {dropdowns.map((dropdown, index) => (
+              <div key={dropdown.id} className={styles.dropdownContainer}>
+                {dropdown.selectedNationality ? (
+                  <div className={styles.selectedNationalityDisplay}>
+                    <span className={styles.selectedCode}>{dropdown.selectedNationality.code}</span>
+                    <span className={styles.selectedName}>{dropdown.selectedNationality.name}</span>
+                    <button
+                      type="button"
+                      className={styles.removeNationalityButton}
+                      onClick={() => handleRemoveDropdown(dropdown.id)}
+                      aria-label="Remove nationality"
+                    >
+                      <X />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <Dropdown
+                      options={country}
+                      value={dropdown.searchTerm}
+                      onChange={(term) => handleSetSearchTerm(dropdown.id, term)}
+                      onSelect={(nationality) => handleNationalitySelect(dropdown.id, nationality)}
+                      placeholder="Search"
+                      searchable={true}
+                      className={styles.searchBar}
+                      maxHeight="200px"
+                      showSearchIcon={true}
+                      showLeftFlag={false}
+                    />
+                    {dropdowns.length > 1 && (
+                      <button
+                        type="button"
+                        className={styles.removeNationalityButton}
+                        onClick={() => handleRemoveDropdown(dropdown.id)}
+                        aria-label="Remove nationality"
+                      >
+                        <X />
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+            ))}
 
             <button type="button" className={styles.addNationalityButton}
-              onClick={handleSave}>
+              onClick={handleAddDropdown}>
               <Plus />
               Add nationality
             </button>
@@ -98,9 +155,16 @@ const Nationalities = () => {
               </button>
             </div>
             <div className={styles.savedNationalityContent}>
-              <span className={styles.savedNationalityName}>
-                {selectedNationality.name}
-              </span>
+              {selectedNationalities.map((nationality, index) => (
+                <div key={index} className={styles.savedNationalityItem}>
+                  <span className={styles.savedNationalityFlag}>
+                    {nationality.flag}
+                  </span>
+                  <span className={styles.savedNationalityName}>
+                    {nationality.name}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -112,15 +176,15 @@ const Nationalities = () => {
               variant="primary"
               className={styles.nationalitiesButton}
               onClick={handleNext}
-            >
-              Next
+              disabled={isUpdating}>
+              {isUpdating ? ('Updating') : ('Next')}
             </Button>
           ) : (
             <Button
               variant="primary"
               className={styles.nationalitiesButton}
               onClick={handleSave}
-              disabled={!selectedNationality}
+              disabled={dropdowns.every(d => !d.selectedNationality)}
             >
               Save
             </Button>

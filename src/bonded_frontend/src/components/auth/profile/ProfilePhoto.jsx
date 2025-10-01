@@ -6,6 +6,7 @@ import { useProfilePhoto } from './ProfilePhotoFunction'
 import { ArrowLeft, ArrowRight, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import DotsWizard from '@/components/wizard/DotsWizard'
+import { getIdentity } from '../../../services/ii'
 
 // Convert base64 to Blob
 const dataURLtoBlob = (dataurl) => {
@@ -30,8 +31,18 @@ const compressImage = async (fileOrBlob, quality = 0.7, maxWidth = 800) => {
     const ctx = canvas.getContext('2d')
     ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height)
 
-    return canvas.toDataURL('image/jpeg', quality)
+    return new Promise((resolve, reject) => {
+        canvas.toBlob(
+            (blob) => {
+                if (blob) resolve(blob)
+                else reject(new Error('Image compression failed'))
+            },
+            'image/jpeg',
+            quality
+        )
+    })
 }
+
 
 const ProfilePhoto = () => {
     const navigate = useNavigate()
@@ -54,6 +65,7 @@ const ProfilePhoto = () => {
         handleNavigateToStep
     } = useProfilePhoto()
 
+    const [isUpdating, setIsUpdating] = useState(null)
     const [storedPhoto, setStoredPhoto] = useState(null)
     const [storedFileName, setStoredFileName] = useState(null)
 
@@ -74,6 +86,7 @@ const ProfilePhoto = () => {
     }, [])
 
     const handleNext = async () => {
+        setIsUpdating(true)
         if (!uploadPhoto) return
         try {
             let fileToCompress = uploadPhoto
@@ -81,16 +94,34 @@ const ProfilePhoto = () => {
                 fileToCompress = dataURLtoBlob(uploadPhoto)
             }
 
+            const auth = await getIdentity()
+
+            const { identity: userIdentity, authenticatedActor } = auth
+
             const compressed = await compressImage(fileToCompress)
-            localStorage.setItem(
-                'profilePhotoData',
-                JSON.stringify({ photo: compressed, fileName: uploadedFileName })
-            )
-            setStoredPhoto(compressed)
-            navigate('/wizard/nationalities')
+            const arrayBuffer = await compressed.arrayBuffer()
+            const profile = new Uint8Array(arrayBuffer)
+            
+            const profiledata = await authenticatedActor.update_user_picture([...profile])
+            
+            if (profiledata.Ok){
+                console.log(profiledata.Ok)
+                localStorage.setItem(
+                    'profilePhotoData',
+                    JSON.stringify({ photo: compressed, fileName: uploadedFileName })
+                )
+                setStoredPhoto(compressed)
+                navigate('/wizard/nationalities')
+            } else {
+                console.log(profiledata.Err)
+            }
         } catch (err) {
             console.error('Compression error:', err)
             alert('Failed to process photo. Please try again.')
+        } finally {
+            setTimeout(() => 
+                setIsUpdating(false), 800
+            )
         }
     }
 
@@ -180,7 +211,7 @@ const ProfilePhoto = () => {
                 {uploadPhoto && (
                     <>
                         <div className={styles.photoActions}>
-                            <Button variant="primary" onClick={handleNext}>Next</Button>
+                            <Button variant="primary" onClick={handleNext} disabled={isUpdating}>{isUpdating ? ('Uploading') : ('Next')}</Button>
                             <Button variant="outline" className={styles.retakeButton} onClick={handleRetakePhoto}>Retake</Button>
                         </div>
                         <div className={styles.profilePhotoButton}>

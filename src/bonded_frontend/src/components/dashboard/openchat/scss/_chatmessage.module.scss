@@ -21,6 +21,8 @@
     position: relative;
     flex-shrink: 0;
     width: 100%;
+    // NOTE: Ensure header doesn't overflow on small screens
+    min-height: 56px;
 }
 
 .backButton {
@@ -46,6 +48,7 @@
     align-items: center;
     flex: 1;
     margin-left: 12px;
+    min-width: 0; // FIXME: Allow flex child to shrink for text truncation
 }
 
 .avatarContainer {
@@ -84,6 +87,7 @@
 
 .participantDetails {
     flex: 1;
+    min-width: 0; // FIXME: Enable ellipsis on inner text
 }
 
 .participantName {
@@ -91,6 +95,9 @@
     font-weight: 600;
     color: var(--front-color-700);
     margin: 0 0 2px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .typingStatus {
@@ -297,6 +304,49 @@
     }
 }
 
+// ANCHOR: Extra responsive adjustments for very small devices
+@media (max-width: 380px) {
+    .chatHeader {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .backButton {
+        width: 32px;
+        height: 32px;
+    }
+
+    .avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .participantName {
+        font-size: 14px;
+    }
+
+    .typingStatus,
+    .onlineStatus {
+        font-size: 11px;
+    }
+
+    .headerActions {
+        gap: 4px;
+    }
+
+    .actionButton {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+// ANCHOR: Hide secondary actions on ultra-narrow screens to preserve space
+@media (max-width: 340px) {
+    .headerActions {
+        display: none;
+    }
+}
+
 .attachButton {
     width: 40px;
     height: 40px;
@@ -341,6 +391,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0; // FIXME: Allow input to shrink in tiny screens
 
     // ANCHOR: Desktop responsive
     @include respond-up(desktop) {
@@ -378,6 +429,7 @@
     font-size: 14px;
     color: var(--front-color-700);
     padding: 4px 0;
+    min-width: 0; // FIXME: Enable proper text truncation
 
     // ANCHOR: Desktop responsive
     @include respond-up(desktop) {
@@ -425,6 +477,13 @@
     // ANCHOR: Extra small mobile responsive
     @include respond-down(small) {
         gap: 2px; // ANCHOR: Minimal gap for extra small screens
+    }
+}
+
+// ANCHOR: On very small screens, hide inline input actions to prioritize typing area
+@media (max-width: 340px) {
+    .inputActions {
+        display: none;
     }
 }
 
@@ -576,6 +635,59 @@
 
     .messageText {
         font-size: 13px;
+    }
+}
+
+// ANCHOR: Loading and error states
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    color: var(--text-color-600);
+    font-size: 14px;
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    text-align: center;
+
+    p {
+        color: var(--error-color);
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+}
+
+.retryButton {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background: var(--primary-color-dark);
+    }
+}
+
+.emptyState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    text-align: center;
+
+    p {
+        color: var(--text-color-600);
+        font-size: 14px;
     }
 }
 

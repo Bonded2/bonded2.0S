@@ -1,8 +1,8 @@
 use candid::{CandidType, Deserialize};
 use candid::Principal;
 
-#[derive(Clone, Debug, CandidType, Deserialize)]
-pub enum DocumentTypes { None, MarriageCertificate, BankStatement, UtilityBill, Other }
+// #[derive(Clone, Debug, CandidType, Deserialize)]
+// pub enum DocumentTypes { None, MarriageCertificate, BankStatement, UtilityBill, Other }
 
 #[derive(Clone, Debug, CandidType, Deserialize)]
 pub enum DMs { None, OpenChat, Telegram, WhatsApp, Messenger }
@@ -30,11 +30,16 @@ pub struct User {
     pub principal_id: Principal,
     pub profile: Vec<u8>,
     pub nationality: String,
-    pub residency: String,
-    pub document_type: Vec<DocumentTypes>,
+    pub primary_residence: String,
+    pub other_addresses: Vec<String>,
+    pub document_type: String,
     pub document: Vec<Vec<u8>>,
     pub email: String,
+    pub firstname: String,
+    pub middlename: String,
+    pub lastname: String,
     pub username: String,
+    pub gender: String,
     pub partner_email: String,
     pub partner_username: String,
     pub dm: Vec<DMs>,

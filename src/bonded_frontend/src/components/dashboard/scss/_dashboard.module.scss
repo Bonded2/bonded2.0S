@@ -5,16 +5,15 @@
     min-height: 100dvh;
     background-color: var(--background-color-100);
     padding: 0 16px;
-    overflow-x: hidden; 
-    
+    overflow-x: hidden;
 
     &::-webkit-scrollbar {
         display: none;
     }
-    
+
     // Hide scrollbar for Firefo
     scrollbar-width: none;
-    
+
     -ms-overflow-style: none;
 
     // ANCHOR: Desktop
@@ -50,13 +49,13 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.5rem;
+    margin-top: 0.7rem;
     gap: 2px;
     padding: 0 4px;
 
     .headerTitle {
         font-size: 24px;
-        color: var(--front-color-500);
+        color: var(--front-color-700);
         font-weight: 700;
         text-align: center;
         line-height: 1.2;
@@ -267,15 +266,15 @@
     margin-top: 0;
     padding: 0;
     width: 100%;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 
     &::-webkit-scrollbar {
         display: none;
     }
-    
+
     // Hide scrollbar for Firefox
     scrollbar-width: none;
-    
+
     // Hide scrollbar for IE and Edge
     -ms-overflow-style: none;
 
@@ -307,15 +306,15 @@
     align-items: center;
     gap: 1.5rem;
     width: 100%;
-    overflow-x: hidden; 
-    
+    overflow-x: hidden;
+
     &::-webkit-scrollbar {
         display: none;
     }
-    
+
     // Hide scrollbar for Firefox
     scrollbar-width: none;
-    
+
     // Hide scrollbar for IE and Edge
     -ms-overflow-style: none;
 
@@ -417,8 +416,7 @@
                 width: 36px;
                 height: 36px;
                 border-radius: 10px;
-                background-color: var(--background-color-200);
-                color: var(--front-color-900);
+                color: var(--front-color-600);
                 flex-shrink: 0;
 
                 svg {
@@ -566,10 +564,10 @@
     &::-webkit-scrollbar {
         display: none;
     }
-    
+
     // Hide scrollbar for Firefox
     scrollbar-width: none;
-    
+
     // Hide scrollbar for IE and Edge
     -ms-overflow-style: none;
 }
@@ -595,6 +593,325 @@
         .browseEvidenceItemIcon svg,
         .browseEvidenceItemRightIcon svg {
             image-rendering: -webkit-optimize-contrast;
+        }
+    }
+}
+
+.evidenceContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    max-width: 350px;
+
+    // ANCHOR: Desktop
+    @include respond-up(desktop) {
+        max-width: 500px;
+    }
+
+    // ANCHOR: Tablet
+    @include respond-between(tablet, desktop) {
+        max-width: 450px;
+    }
+
+    // ANCHOR: Mobile
+    @include respond-down(tablet) {
+        max-width: 350px;
+    }
+
+    .evidenceTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: center;
+        line-height: 1.2;
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+
+    .evidenceScrollContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        padding-right: 4px;
+
+        // ANCHOR: Hide scrollbar when not needed
+        &:not(:hover) {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        // ANCHOR: Custom scrollbar
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: var(--background-color-300);
+            border-radius: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--front-color-400);
+            border-radius: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: var(--front-color-500);
+        }
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            max-height: 220px;
+            gap: 0.75rem;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            max-height: 200px;
+            gap: 0.625rem;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            max-height: 180px;
+            gap: 0.5rem;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            max-height: 210px;
+            gap: 0.375rem;
+        }
+
+        @include respond-down(small) {
+            max-height: 210px;
+            gap: 0.25rem;
+        }
+    }
+
+    .evidenceItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 12px;
+        background-color: var(--background-color-500);
+        padding: 12px;
+        gap: 10px;
+        width: 95%;
+        flex-shrink: 0;
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            padding: 16px;
+            gap: 12px;
+            border-radius: 16px;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            padding: 14px;
+            gap: 11px;
+            border-radius: 14px;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            padding: 10px;
+            gap: 8px;
+            width: 100%;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            padding: 8px;
+            gap: 6px;
+        }
+
+        @include respond-down(small) {
+            padding: 6px;
+            gap: 4px;
+        }
+    }
+
+    .evidenceItemImage {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            width: 40px;
+            height: 40px;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            width: 38px;
+            height: 38px;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            width: 32px;
+            height: 32px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            width: 30px;
+            height: 30px;
+        }
+
+        @include respond-down(small) {
+            width: 28px;
+            height: 28px;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    .evidenceItemTitle {
+        font-size: 14px;
+        color: var(--front-color-700);
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 0;
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            font-size: 16px;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            font-size: 15px;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            font-size: 13px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            font-size: 12px;
+        }
+
+        @include respond-down(small) {
+            font-size: 11px;
+        }
+    }
+
+    .evidenceItemTimeContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        background-color: var(--background-color-300);
+        gap: 4px;
+        border-radius: 2px;
+        flex-shrink: 0;
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            padding: 6px;
+            gap: 6px;
+            border-radius: 4px;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            padding: 5px;
+            gap: 5px;
+            border-radius: 3px;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            padding: 3px;
+            gap: 3px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            padding: 2px;
+            gap: 2px;
+        }
+
+        @include respond-down(small) {
+            padding: 1px;
+            gap: 1px;
+        }
+
+        .evidenceItemTime {
+            font-size: 12px;
+            color: var(--front-color-400);
+            font-weight: 400;
+
+            // ANCHOR: Desktop
+            @include respond-up(desktop) {
+                font-size: 14px;
+            }
+
+            // ANCHOR: Tablet
+            @include respond-between(tablet, desktop) {
+                font-size: 13px;
+            }
+
+            // ANCHOR: Mobile
+            @include respond-down(tablet) {
+                font-size: 11px;
+            }
+
+            // ANCHOR: Small mobile
+            @include respond-down(mobile) {
+                font-size: 10px;
+            }
+
+            @include respond-down(small) {
+                font-size: 9px;
+            }
         }
     }
 }

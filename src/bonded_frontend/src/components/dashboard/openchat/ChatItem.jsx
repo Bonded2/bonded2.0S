@@ -1,18 +1,21 @@
 import React from 'react'
 import styles from './scss/_openchat.module.scss'
+import { Session } from '../../../routes/SessionProvider'
+import logo from '/icons/icon-384x384.png'
 
-// ANCHOR: Individual chat item component
 const ChatItem = ({ chat, onClick }) => {
+    const { userData, partnerData } = Session()
     const formatTime = (date) => {
+        const dateObj = date instanceof Date ? date : new Date(date)
         const now = new Date()
-        const diffInHours = (now - date) / (1000 * 60 * 60)
+        const diffInHours = (now - dateObj) / (1000 * 60 * 60)
 
         if (diffInHours < 24) {
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            return dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         } else if (diffInHours < 48) {
             return 'Yesterday'
         } else {
-            return date.toLocaleDateString()
+            return dateObj.toLocaleDateString()
         }
     }
 
@@ -20,8 +23,8 @@ const ChatItem = ({ chat, onClick }) => {
         <div className={styles.chatItem} onClick={onClick}>
             <div className={styles.avatarContainer}>
                 <img
-                    src={chat.image}
-                    alt={chat.alt}
+                    src={partnerData?.profile || logo}
+                    alt='Partner'
                     className={styles.avatar}
                 />
                 {chat.status && (
@@ -31,7 +34,7 @@ const ChatItem = ({ chat, onClick }) => {
 
             <div className={styles.chatContent}>
                 <div className={styles.chatHeader}>
-                    <h3 className={styles.chatTitle}>{chat.title}</h3>
+                    <h3 className={styles.chatTitle}>{partnerData?.firstname || partnerData?.username || partnerData?.email}</h3>
                     <span className={styles.chatTime}>{formatTime(chat.date)}</span>
                 </div>
 

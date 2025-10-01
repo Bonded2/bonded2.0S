@@ -1,11 +1,10 @@
 @use "@/style/_variables.scss" as *;
 
-// ANCHOR: Chat List Container
 .chatListContainer {
     height: calc(100vh - 22vh);
     height: calc(100dvh - 22vh);
     background-color: var(--background-color-100);
-    padding: 0 16px; // ANCHOR: Add horizontal padding for proper spacing
+    padding: 0 16px;
     overflow-x: hidden;
     position: relative;
     display: flex;
@@ -21,7 +20,7 @@
     @include respond-up(desktop) {
         height: calc(100vh - 20vh);
         height: calc(100dvh - 20vh);
-        padding: 0 24px; // ANCHOR: Increased padding for desktop
+        padding: 0 24px;
         max-width: 1200px;
         margin: 0 auto;
     }
@@ -30,22 +29,22 @@
     @include respond-between(tablet, desktop) {
         height: calc(100vh - 20vh);
         height: calc(100dvh - 20vh);
-        padding: 0 20px; // ANCHOR: Medium padding for tablet
+        padding: 0 20px;
     }
 
     // ANCHOR: Mobile
     @include respond-down(tablet) {
-        padding: 0 16px; // ANCHOR: Standard mobile padding
+        padding: 0 16px;
     }
 
     // ANCHOR: Small mobile
     @include respond-down(mobile) {
-        padding: 0 12px; // ANCHOR: Reduced padding for small mobile
+        padding: 0 12px;
     }
 
     // ANCHOR: Extra small mobile
     @include respond-down(small) {
-        padding: 0 8px; // ANCHOR: Minimal padding for extra small screens
+        padding: 0 8px;
     }
 }
 
@@ -56,7 +55,7 @@
     align-items: center;
     margin-bottom: 1.5rem;
     margin-top: 1rem;
-    padding: 0 4px; // ANCHOR: Small additional padding for header content
+    padding: 0 4px;
 }
 
 .chatListTitle {
@@ -71,8 +70,8 @@
     height: 40px;
     border: none;
     border-radius: 8px;
-    background-color: var(--background-color-1200);
-    color: var(--front-color-200);
+    background-color: transparent;
+    color: var(--front-color-700);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -93,12 +92,12 @@
 .searchContainer {
     position: relative;
     margin-bottom: 20px;
-    padding: 0 4px; // ANCHOR: Small additional padding for search
+    padding: 0 4px;
 }
 
 .searchIcon {
     position: absolute;
-    left: 16px; // ANCHOR: Adjusted for container padding
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--front-color-200);
@@ -111,7 +110,7 @@
     padding: 0 12px 0 40px;
     border: 1px solid var(--border-color-400);
     border-radius: 22px;
-    background-color: var(--background-color-1200);
+    background-color: transparent;
     font-size: 14px;
     color: var(--front-color-200);
     outline: none;
@@ -133,7 +132,7 @@
     flex: 1;
     overflow-y: auto;
     border-radius: 8px;
-    padding: 0 4px; // ANCHOR: Small additional padding for chat items
+    padding: 0 4px;
 
     &::-webkit-scrollbar {
         width: 4px;
@@ -153,6 +152,77 @@
     }
 }
 
+// ANCHOR: Loading and error states
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    color: var(--text-color-600);
+    font-size: 14px;
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    text-align: center;
+
+    p {
+        color: var(--error-color);
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+}
+
+.retryButton {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background: var(--primary-color-dark);
+    }
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    text-align: center;
+
+    p {
+        color: var(--text-color-600);
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+}
+
+.startChatButton {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background: var(--primary-color-dark);
+    }
+}
+
 // ANCHOR: Responsive adjustments
 @media (max-width: 480px) {
     .chatListTitle {
@@ -162,5 +232,11 @@
     .newChatButton {
         width: 36px;
         height: 36px;
+    }
+
+    .loadingContainer,
+    .errorContainer,
+    .emptyState {
+        padding: 30px 16px;
     }
 }

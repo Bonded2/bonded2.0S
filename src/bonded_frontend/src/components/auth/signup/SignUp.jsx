@@ -4,6 +4,7 @@ import Checkbox from '@/reusable/Checkbox'
 import { useState, useEffect } from 'react'
 import { SignUpFunction } from './SignUpFunction'
 import { useNavigate } from 'react-router-dom'
+import { getIdentity } from '../../../services/ii'
 
 const SignUp = () => {
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ const SignUp = () => {
         isFormValid
     } = SignUpFunction()
 
+    const [isUpdating, setIsUpdating] = useState(null)
     const [storedSignUpData, setStoredSignUpData] = useState({})
 
     useEffect(() => {
@@ -28,13 +30,33 @@ const SignUp = () => {
         }
     }, [])
 
-    const handleNext = () => {
-        const { firstname, middlename, lastname, username } = formData
-        localStorage.setItem(
-            'signupData',
-            JSON.stringify({ firstname, middlename, lastname, username })
-        )
-        navigate('/wizard/email')
+    const handleNext = async () => {
+        setIsUpdating(true)
+        try {
+            const { firstname, middlename, lastname, username } = formData
+
+            const auth = await getIdentity()
+
+            const { identity: userIdentity, authenticatedActor } = auth
+
+            const userdata = await authenticatedActor.update_user_data(firstname, middlename, lastname, username)
+
+            if (userdata.Ok) {
+                console.log(userdata.Ok)
+                localStorage.setItem(
+                    'signupData',
+                    JSON.stringify({ firstname, middlename, lastname, username })
+                )
+                navigate('/wizard/passport')
+            }
+            
+        } catch(err) {
+            console.log(err)
+        } finally {
+            setTimeout(() => 
+                setIsUpdating(false), 800
+            )
+        }
     }
 
     return (
@@ -93,11 +115,11 @@ const SignUp = () => {
             <div className={styles.buttonField}>
                 <button
                     className={styles.nextButton}
-                    disabled={!isFormValid()}
+                    disabled={!isFormValid() || isUpdating}
                     onClick={handleNext}
                     type='button'
                 >
-                    Next
+                    {isUpdating ? ('Updating') : ('Next')}
                 </button>
             </div>
         </div>

@@ -4,51 +4,54 @@ import { Pencil, Trash2, Heart, ChevronUp } from 'lucide-react';
 import Button from '@/reusable/Button';
 import rimuro from '@/assets/example/rimuro.jpg';
 import nishimiya from '@/assets/example/nishimiya.jpg';
+import logo from '/icons/icon-384x384.png'
+import { Session } from '../../../routes/SessionProvider';
 
 const ProfileInformation = () => {
     const [isPartner, setIsPartner] = useState(false);
+    const { userData, partnerData } = Session()
 
-    const userData = {
+    const defaultUserData = {
         id: 3,
-        src: rimuro,
-        firstname: 'Rimuro',
-        middlename: 'Kazuto',
-        lastname: 'Tempest',
+        src: userData?.profile || logo,
+        firstname: userData?.firstname,
+        middlename: userData?.middlename,
+        lastname: userData?.lastname,
         sex: 'Male',
         dateOfBirth: '25.10.1985',
         issuedDate: '10.03.2023',
         expiryDate: '10.03.2033',
-        nationality: 'American',
-        primaryresidence: '42 Wallaby Way, Sydney',
-        taxableresidence: '42 Wallaby Way, Sydney',
-        significantresidence: '42 Wallaby Way, Sydney',
+        nationality: userData?.nationality,
+        primaryresidence: userData?.primary_residence,
+        taxableresidence: userData?.primary_residence,
+        significantresidence: userData?.primary_residence,
         canisterid: 'rryah-gqaaa-aaaaa-cag',
-        typefile: 'Passport',
+        typefile: userData?.document_type,
         issuefile: '10 Mar 2023',
         issuefilecountry: 'USA',
     }
 
-    const partnerData = {
+    const defaultPartnerData = {
         id: 4,
-        src: nishimiya,
-        firstname: 'Nishimiya',
-        middlename: 'Mai',
-        lastname: 'Kazuto',
+        src: partnerData?.profile || logo,
+        firstname: partnerData?.firstname || partnerData?.email,
+        middlename: partnerData?.middlename,
+        lastname: partnerData?.lastname,
         sex: 'Female',
         dateOfBirth: '18.06.1988',
         issuedDate: '10.03.2023',
         expiryDate: '10.03.2033',
-        nationality: 'American',
-        primaryresidence: '456 Pine Avenue, New York',
-        taxableresidence: '456 Pine Avenue, New York',
-        significantresidence: '456 Pine Avenue, New York',
+        nationality: partnerData?.nationality,
+        primaryresidence: partnerData?.primary_residence,
+        taxableresidence: partnerData?.primary_residence,
+        significantresidence: partnerData?.primary_residence,
         canisterid: 'rryah-gqaaa-aaaaa-cag',
-        typefile: 'Passport',
+        typefile: partnerData?.document_type,
         issuefile: '10 Mar 2023',
         issuefilecountry: 'USA',
     }
 
-    const currentData = isPartner ? partnerData : userData;
+    const currentData = isPartner ? defaultPartnerData : defaultUserData;
 
     return (
         <div className={styles.profileInformationContainer}>
@@ -86,7 +89,7 @@ const ProfileInformation = () => {
                 <div className={styles.fullNameSection}>
                     <div className={styles.avatarContainer}>
                         <img
-                            src={currentData.src}
+                            src={currentData.src || 'No Profile'}
                             alt="Profile"
                             className={styles.avatar}
                         />

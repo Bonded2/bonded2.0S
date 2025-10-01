@@ -11,25 +11,26 @@ const Dashboard = () => {
         images,
         dates,
         handlePhotoUpload,
-        browseEvidence
+        browseEvidence,
+        evidence,
     } = useDashboard();
 
     return (
         <div className={styles.dashboard}>
 
             <div className={styles.header}>
-                <p className={styles.headerTitle}>Explore your Passport</p>
-                <p className={styles.headerSubtitle}>Recent Activity</p>
+                <p className={styles.headerTitle}>Your evidence</p>
+                {/* <p className={styles.headerSubtitle}>Recent Activity</p> */}
             </div>
 
-            <div className={styles.carouselContainer}>
+            {/* <div className={styles.carouselContainer}>
                 <MobileCarousel images={images} dates={dates} />
-            </div>
+            </div> */}
 
             <div className={styles.dashboardContent}>
 
                 <div className={styles.timelineContainer}>
-                    <p className={styles.timelineTitle}>Browse your evidence</p>
+                    {/* <p className={styles.timelineTitle}>Browse your evidence</p> */}
 
                     <div className={styles.browseEvidenceContainer}>
                         {browseEvidence.map((item, index) => (
@@ -42,6 +43,23 @@ const Dashboard = () => {
                                 <div className={styles.browseEvidenceItemTitle}>{item.title}</div>
                                 <div className={styles.browseEvidenceItemRightIcon}>{item.rightIcon}</div>
                             </Link>
+                        ))}
+                    </div>
+                </div>
+
+                <div className={styles.evidenceContainer}>
+                    <p className={styles.evidenceTitle}>Recent evidence</p>
+                    <div className={styles.evidenceScrollContainer}>
+                        {evidence.map((item, index) => (
+                            <div className={styles.evidenceItem} key={index}>
+                                <div className={styles.evidenceItemImage}>
+                                    <img src={item.image} alt={item.title} />
+                                </div>
+                                <div className={styles.evidenceItemTitle}>{item.title}</div>
+                                <div className={styles.evidenceItemTimeContainer}>
+                                    <span className={styles.evidenceItemTime}>{item.time}</span>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>

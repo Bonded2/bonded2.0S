@@ -57,16 +57,17 @@ import {
   Setting,
   ChatMessage,
   ChatList,
+  Search,
 } from "./LazyCodeSplitting";
-// import { SessionProvider } from "./SessionProvider"
-// import AccessProvider from "./AccessProvider";
+import { SessionProvider } from "./SessionProvider"
+import AccessProvider from "./AccessProvider";
 
 const AppRoutes = () => {
 
   return (
     <BrowserRouter>
-      {/* <SessionProvider>
-        <AccessProvider> */}
+      <SessionProvider>
+        <AccessProvider>
           <Suspense fallback={<PulseLoader size={24} color="var(--secondary-color)" />}>
             <Routes>
               <Route element={<Main />}>
@@ -136,14 +137,15 @@ const AppRoutes = () => {
                   <Route path="settings" element={<Setting />} />
                   <Route path="chat-message" element={<ChatMessage />} />
                   <Route path="chat-list" element={<ChatList />} />
+                  <Route path="search" element={<Search />} />
                 </Route>
 
               </Route>
 
             </Routes>
           </Suspense>
-        {/* </AccessProvider>
-      </SessionProvider> */}
+        </AccessProvider>
+      </SessionProvider>
     </BrowserRouter>
   )
 }

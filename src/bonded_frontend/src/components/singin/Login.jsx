@@ -81,8 +81,7 @@ const Login = () => {
 
                 <div className={styles.authButtons}>
                     <Button
-                        variant="outline"
-                        icon={ii}
+                        variant="primary"
                         className={styles.authButton}
                         onClick={handleLoginII}
                     >
@@ -90,8 +89,7 @@ const Login = () => {
                             <> Sign in with Internet Identity </>)}
                     </Button>
                     <Button
-                        variant="outline"
-                        icon={nfid}
+                        variant="primary"
                         className={styles.authButton}
                         onClick={handleLoginNFID}
                     >
@@ -99,8 +97,7 @@ const Login = () => {
                                 <> Sign in with NFID </>)}
                     </Button>
                     <Button
-                        variant="outline"
-                        icon={nns}
+                        variant="primary"
                         className={styles.authButton}
                         onClick={handleLoginNNS}
                     >

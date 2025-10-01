@@ -6,6 +6,7 @@ import Input from '@/reusable/Input'
 import Button from '@/reusable/Button'
 import { Plus, ArrowLeft, ArrowRight, House } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { getIdentity } from '../../../services/ii'
 
 const Residencies = () => {
     const {
@@ -22,6 +23,7 @@ const Residencies = () => {
         updatePrimaryResidence,
     } = ResidenciesFunction();
 
+    const [isUpdating, setIsUpdating] = useState(null)
     const [storedResidenciesData, setStoredResidenciesData] = useState({})
 
     useEffect(() => {
@@ -44,13 +46,38 @@ const Residencies = () => {
         }
     }, [])
 
-    const handleNext = () => {
-        localStorage.setItem(
-            'residenciesData',
-            JSON.stringify({ primaryResidence, otherAddresses })
-        )
-        navigate('/wizard/upload-file')
-    }
+      const handleNext = async () => {
+        setIsUpdating(true)
+          try {
+                const auth = await getIdentity()
+    
+                const { identity: userIdentity, authenticatedActor } = auth
+
+                const otherAddresses2 = otherAddresses.map(addr =>
+                    typeof addr === 'string' ? addr : addr.value
+                )
+
+                console.log(primaryResidence, otherAddresses2)
+    
+                const userdata = await authenticatedActor.update_user_residencies(primaryResidence, otherAddresses2)
+                
+    
+                if (userdata.Ok) {
+                    localStorage.setItem(
+                        'residenciesData',
+                        JSON.stringify({ primaryResidence, otherAddresses })
+                    )
+                    navigate('/wizard/upload-file')
+                }
+                
+            } catch(err) {
+                console.log(err)
+            } finally {
+                setTimeout(() => 
+                    setIsUpdating(false), 800
+                )
+            }
+      }
 
     return (
         <div className={styles.residenciesContainer}>
@@ -152,8 +179,8 @@ const Residencies = () => {
                         <Button
                             variant="primary"
                             onClick={handleNext}
-                        >
-                            Save
+                            disabled={isUpdating}>
+                                {isUpdating ? ('Updating') : ('Save')}
                         </Button>
                     )
                 }

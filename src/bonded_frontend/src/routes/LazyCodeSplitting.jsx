@@ -229,7 +229,9 @@ export const ChatList = lazy(() =>
     import("@/components/dashboard/openchat/ChatList")
 );
 
-
+export const Search = lazy(() =>
+    import("@/components/dashboard/navigation/search/Search")
+);
 
 
 

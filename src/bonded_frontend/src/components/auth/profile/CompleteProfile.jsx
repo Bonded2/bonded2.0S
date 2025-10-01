@@ -84,14 +84,18 @@ const CompleteProfile = () => {
             </button>
           </div>
           <div className={styles.sectionContent}>
-            {nationalities.isSaved && nationalities.selectedNationality ? (
+            {nationalities.isSaved && nationalities.selectedNationalities.length > 0 ? (
               <div className={styles.nationalityInfo}>
-                <span className={styles.nationalityFlag}>
-                  {nationalities.selectedNationality.flag}
-                </span>
-                <span className={styles.nationalityName}>
-                  {nationalities.selectedNationality.name}
-                </span>
+                {nationalities.selectedNationalities.map((nationality, index) => (
+                  <div key={index} className={styles.nationalityItem}>
+                    <span className={styles.nationalityFlag}>
+                      {nationality.flag}
+                    </span>
+                    <span className={styles.nationalityName}>
+                      {nationality.name}
+                    </span>
+                  </div>
+                ))}
                 <span className={styles.fileStatus}>Saved</span>
               </div>
             ) : (
@@ -194,7 +198,7 @@ const CompleteProfile = () => {
           <Button
             variant="primary"
             className={styles.completeButton}
-            onClick={() => { navigate('/wizard/partner-pending') }}
+            onClick={() => { navigate('/wizard/kyc') }}
           >
             Next
           </Button>

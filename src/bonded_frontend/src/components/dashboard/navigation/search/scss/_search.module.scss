@@ -1,0 +1,212 @@
+@use "@/style/variables" as *;
+
+.search {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefo
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.searchHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+
+    p {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--front-color-400);
+        margin: 0;
+    }
+}
+
+.searchClose {
+    width: 20px;
+    height: 20px;
+    color: var(--front-color-700);
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: var(--front-color-900);
+    }
+}
+
+.searchSuggestion {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 16px;
+
+    .searchSuggestionList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+
+        .searchSuggestionItem {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 8px;
+            background-color: var(--background-color-500);
+            border: 1px solid var(--border-color-200);
+            border-radius: 20px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: var(--background-color-200);
+                border-color: var(--border-color-300);
+            }
+
+            p {
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--front-color-1500);
+                margin: 0;
+                white-space: nowrap;
+            }
+        }
+
+        .searchSuggestionIcon {
+            width: 9.33px;
+            height: 9.33px;
+            color: var(--front-color-1500);
+        }
+    }
+}
+
+// ANCHOR: Search Results Styles
+.searchResults {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: calc(4 * 96px + 3 * 16px + 32px); // 4 cards + 3 gaps + padding
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--front-color-200);
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--front-color-100);
+    }
+}
+
+.searchResultsItem {
+    background-color: var(--background-color-500);
+    padding: 16px;
+    gap: 16px;
+    width: 358px;
+    height: 96px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.searchResultsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.searchResultsIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10.25px;
+    height: 15px;
+    color: var(--front-color-600);
+}
+
+.searchResultsTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--front-color-400);
+    flex: 1;
+    margin: 0;
+}
+
+.searchResultsTime {
+    background-color: var(--background-color-300);
+    height: 18px;
+    width: 70px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--front-color-400);
+    margin: 0;
+}
+
+.searchResultsContent {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+}
+
+.searchResultsMessage {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--front-color-1400);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

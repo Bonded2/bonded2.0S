@@ -20,7 +20,7 @@ function LoginFunctions() {
 
     const navigate = useNavigate()
 
-     const handleLoginII = async () => {
+    const handleLoginII = async () => {
         setIsSigningInII(true)
         setSignInIIError(null)
         

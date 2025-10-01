@@ -1,14 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChatList as ReactChatList } from 'react-chat-elements'
 import styles from './scss/_chatlist.module.scss'
 import { Plus, Search } from 'lucide-react'
 import { mockChatData } from './MockData'
 import ChatItem from './ChatItem'
+import { getChats, checkAndMigrateData, setCurrentUserId } from './indexDB/db'
 
 
-export const ChatList = ({ onChatSelect }) => {
+export const ChatList = ({ onChatSelect, userData }) => {
     const [searchTerm, setSearchTerm] = useState('')
-    const [filteredChats, setFilteredChats] = useState(mockChatData)
+    const [chats, setChats] = useState([])
+    const [filteredChats, setFilteredChats] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        const loadChats = async () => {
+            try {
+                setLoading(true)
+                setError(null)
+
+                if (userData) {
+                    setCurrentUserId(userData)
+                }
+
+                await checkAndMigrateData()
+
+                const allChats = await getChats()
+                setChats(allChats)
+                setFilteredChats(allChats)
+            } catch (err) {
+                console.error('Failed to load chats:', err)
+                setError('Failed to load chats')
+                setChats(mockChatData)
+                setFilteredChats(mockChatData)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadChats()
+    }, [userData])
 
     // ANCHOR: Handle search functionality
     const handleSearch = (e) => {
@@ -16,9 +48,9 @@ export const ChatList = ({ onChatSelect }) => {
         setSearchTerm(searchValue)
 
         if (searchValue.trim() === '') {
-            setFilteredChats(mockChatData)
+            setFilteredChats(chats)
         } else {
-            const filtered = mockChatData.filter(chat =>
+            const filtered = chats.filter(chat =>
                 chat.title.toLowerCase().includes(searchValue.toLowerCase()) ||
                 chat.subtitle.toLowerCase().includes(searchValue.toLowerCase())
             )
@@ -35,9 +67,22 @@ export const ChatList = ({ onChatSelect }) => {
     }
 
     // ANCHOR: Handle new chat button click
-    const handleNewChat = () => {
+    const handleNewChat = async () => {
         console.log('New chat clicked')
         // TODO: Implement new chat creation
+        // This could open a modal or navigate to a new chat creation page
+    }
+
+    // ANCHOR: Refresh chats function
+    const refreshChats = async () => {
+        try {
+            const allChats = await getChats()
+            setChats(allChats)
+            setFilteredChats(allChats)
+        } catch (err) {
+            console.error('Failed to refresh chats:', err)
+            setError('Failed to refresh chats')
+        }
     }
 
     return (
@@ -66,16 +111,43 @@ export const ChatList = ({ onChatSelect }) => {
                 />
             </div>
 
+            {/* ANCHOR: Loading and error states */}
+            {loading && (
+                <div className={styles.loadingContainer}>
+                    <p>Loading chats...</p>
+                </div>
+            )}
+
+            {error && (
+                <div className={styles.errorContainer}>
+                    <p>{error}</p>
+                    <button onClick={refreshChats} className={styles.retryButton}>
+                        Retry
+                    </button>
+                </div>
+            )}
+
             {/* ANCHOR: Chat list */}
-            <div className={styles.chatListWrapper}>
-                {filteredChats.map((chat) => (
-                    <ChatItem
-                        key={chat.id}
-                        chat={chat}
-                        onClick={() => handleChatClick(chat)}
-                    />
-                ))}
-            </div>
+            {!loading && !error && (
+                <div className={styles.chatListWrapper}>
+                    {filteredChats.length === 0 ? (
+                        <div className={styles.emptyState}>
+                            <p>No chats found</p>
+                            <button onClick={handleNewChat} className={styles.startChatButton}>
+                                Start a new chat
+                            </button>
+                        </div>
+                    ) : (
+                        filteredChats.map((chat) => (
+                            <ChatItem
+                                key={chat.id}
+                                chat={chat}
+                                onClick={() => handleChatClick(chat)}
+                            />
+                        ))
+                    )}
+                </div>
+            )}
         </div>
     )
 }

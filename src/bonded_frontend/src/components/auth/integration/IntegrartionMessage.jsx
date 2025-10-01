@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './scss/_integrationmessage.module.scss'
 import DotsWizard from '@/components/wizard/DotsWizard'
 import { useNavigate } from 'react-router-dom'

@@ -191,10 +191,16 @@
 // ANCHOR: Nationality specific styles
 .nationalityInfo {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
     background: var(--background-color-50);
     border-radius: 8px;
+
+    .nationalityItem {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
 
     .nationalityFlag {
         font-size: 12px;

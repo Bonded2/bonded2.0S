@@ -310,6 +310,61 @@
     }
 }
 
+// ANCHOR: Legal document checkbox section
+.uploadedFileCheckbox {
+    margin-top: 1.5rem;
+    padding: 12px;
+    border-radius: 8px;
+
+    // ANCHOR: Tablet responsive
+    @include respond-down(tablet) {
+        margin-top: 1.2rem;
+        padding: 10px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(mobile) {
+        margin-top: 1rem;
+        padding: 8px;
+    }
+}
+
+.uploadedFileLegalText {
+    margin-top: 8px;
+    padding: 0 12px;
+
+    // ANCHOR: Tablet responsive
+    @include respond-down(tablet) {
+        margin-top: 6px;
+        padding: 0 10px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(mobile) {
+        margin-top: 6px;
+        padding: 0 8px;
+    }
+
+    p {
+        font-size: 12px;
+        color: var(--front-color-500);
+        line-height: 1.5;
+        margin: 0;
+        font-style: italic;
+
+        // ANCHOR: Mobile responsive text
+        @include respond-down(tablet) {
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        @include respond-down(mobile) {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    }
+}
+
 .selectedFileContent {
     margin-top: 1.5rem;
     background-color: var(--background-color-500);

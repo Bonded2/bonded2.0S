@@ -1,18 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './scss/_bondPending.module.scss'
 import Spinner from '@/loader/Spinner'
+import { Session } from '../../../routes/SessionProvider'
+import { getIdentity } from '../../../services/ii'
 
 const BondPending = () => {
     const navigate = useNavigate()
+    const { userData } = Session()
+    const [isReloading, setIsReloading] = useState(null)
 
     useEffect(() => {
-        const timerId = setTimeout(() => {
-            navigate('/wizard/bond-confirmation', { replace: true })
-        }, 1500) 
+        if (!userData) return
 
-        return () => clearTimeout(timerId)
-    }, [navigate])
+        let intervalId
+
+        const fetchUser = async () => {
+            try {
+                const auth = await getIdentity()
+                const { authenticatedActor } = auth
+
+                const result = await authenticatedActor.get_user()
+                const updatedUserData = result.Ok
+
+                const status = Object.keys(updatedUserData.status)[0]
+                updatedUserData.status = status
+
+                if (status === 'Complicated') {
+                    navigate('/wizard/bond-confirmation', { replace: true })
+                    clearInterval(intervalId)
+                }
+            } catch (err) {
+                console.error('Failed to fetch user:', err)
+            }
+        }
+
+        fetchUser()
+
+        intervalId = setInterval(fetchUser, 5000)
+
+        return () => clearInterval(intervalId)
+    }, [navigate, userData])
 
     return (
         <div className={styles.bondPendingContainer}>
@@ -24,6 +52,9 @@ const BondPending = () => {
                 <p className={styles.description}>
                     We’ve sent your invitation. Once your partner accepts, we’ll begin syncing your details and building your Relationship Passport.
                 </p>
+
+                {/* <button onClick={handleReload} disabled={isReloading}>{isReloading ? ('Checking') : ('Check')}</button> */}
+
             </div>
 
         </div>

@@ -8,30 +8,32 @@ import Input from '@/reusable/Input';
 import { useNavigate } from 'react-router-dom';
 import Minicalendar from '@/reusable/Minicalendar';
 import InlineSelect from '@/reusable/InlineSelect';
+import { getIdentity } from '../../../services/ii';
+import Checkbox from '@/reusable/Checkbox';
 
 const dataURLtoBlob = (dataurl) => {
-    const arr = dataurl.split(',')
-    const mime = arr[0].match(/:(.*?);/)[1]
-    const bstr = atob(arr[1])
-    let n = bstr.length
-    const u8arr = new Uint8Array(n)
-    while (n--) u8arr[n] = bstr.charCodeAt(n)
-    return new Blob([u8arr], { type: mime })
+  const arr = dataurl.split(',')
+  const mime = arr[0].match(/:(.*?);/)[1]
+  const bstr = atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) u8arr[n] = bstr.charCodeAt(n)
+  return new Blob([u8arr], { type: mime })
 }
 
 // Compress image Blob or File to JPEG base64
 const compressImage = async (fileOrBlob, quality = 0.7, maxWidth = 800) => {
-    const bitmap = await createImageBitmap(fileOrBlob)
-    const scale = bitmap.width > maxWidth ? maxWidth / bitmap.width : 1
+  const bitmap = await createImageBitmap(fileOrBlob)
+  const scale = bitmap.width > maxWidth ? maxWidth / bitmap.width : 1
 
-    const canvas = document.createElement('canvas')
-    canvas.width = bitmap.width * scale
-    canvas.height = bitmap.height * scale
+  const canvas = document.createElement('canvas')
+  canvas.width = bitmap.width * scale
+  canvas.height = bitmap.height * scale
 
-    const ctx = canvas.getContext('2d')
-    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height)
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height)
 
-    return canvas.toDataURL('image/jpeg', quality)
+  return canvas.toDataURL('image/jpeg', quality)
 }
 
 const UploadFile = () => {
@@ -78,55 +80,71 @@ const UploadFile = () => {
     ThumbsUp: <ThumbsUp />,
   };
 
+  const [isUpdating, setIsUpdating] = useState(null)
   const [storedFiles, setStoredFiles] = useState([])
-      const [storedFileName, setStoredFileName] = useState(null)
-  
-useEffect(() => {
+  const [storedFileName, setStoredFileName] = useState(null)
+
+  useEffect(() => {
     const stored = localStorage.getItem('uploadedFiles')
     if (stored) {
-        try {
-            setStoredFiles(JSON.parse(stored))
-        } catch {
-            setStoredFiles([])
-        }
+      try {
+        setStoredFiles(JSON.parse(stored))
+      } catch {
+        setStoredFiles([])
+      }
     }
-}, [])
-  
-const handleContinue = async () => {
+  }, [])
+
+  const handleContinue = async () => {
+    setIsUpdating(true)
     if (!selectedFile) return
 
     try {
-        let fileToCompress = selectedFile.file || selectedFile
+      let fileToCompress = selectedFile.file || selectedFile
 
-        if (typeof selectedFile === 'string') {
-            fileToCompress = dataURLtoBlob(selectedFile)
-        }
+      if (typeof selectedFile === 'string') {
+        fileToCompress = dataURLtoBlob(selectedFile)
+      }
 
-        const compressed = await compressImage(fileToCompress)
+      const auth = await getIdentity()
 
-        // Save file metadata
-        const newFile = {
-            fileName: selectedFile.name,
-            data: compressed,
-            fileType: selectedFileType,
-            countryCode: selectedCountryCode,
-            dateRange: selectedDateRange
-        }
+      const { identity: userIdentity, authenticatedActor } = auth
 
-        const updatedFiles = [...storedFiles, newFile]
-        setStoredFiles(updatedFiles)
-        localStorage.setItem('uploadedFiles', JSON.stringify(updatedFiles))
+      const compressed = await compressImage(fileToCompress)
+      const byteString = atob(compressed.split(',')[1])
+      const byteArray = new Uint8Array(byteString.length)
+      for (let i = 0; i < byteString.length; i++) {
+        byteArray[i] = byteString.charCodeAt(i)
+      }
 
-        // Reset current selection
-        setSelectedFile(null)
-        setChooseFile(false)
-        setHasContinued(true)
+      const fileData = await authenticatedActor.update_user_documents(selectedFileType, [Array.from(byteArray)])
+      // Save file metadata
+      const newFile = {
+        fileName: selectedFile.name,
+        data: compressed,
+        fileType: selectedFileType,
+        countryCode: selectedCountryCode,
+        dateRange: selectedDateRange
+      }
+
+      const updatedFiles = [...storedFiles, newFile]
+      setStoredFiles(updatedFiles)
+      localStorage.setItem('uploadedFiles', JSON.stringify(updatedFiles))
+
+      // Reset current selection
+      setSelectedFile(null)
+      setChooseFile(false)
+      setHasContinued(true)
 
     } catch (err) {
-        console.error('Compression error:', err)
-        alert('Failed to process photo. Please try again.')
+      console.error('Compression error:', err)
+      alert('Failed to process photo. Please try again.')
+    } finally {
+      setTimeout(() =>
+        setIsUpdating(false), 800
+      )
     }
-}
+  }
 
 
   const fileList = fileListData.map(item => ({
@@ -336,9 +354,23 @@ const handleContinue = async () => {
             <button type="button" className={styles.uploadedFileAddAnother}
               onClick={() => { setHasContinued(false); setChooseFile(false); }}>
               <Plus size={14} />
-              <p>Add another file</p>
+              <p>Add additional</p>
             </button>
           </div>
+
+          <div className={styles.uploadedFileCheckbox}>
+            <Checkbox
+              label='This is a Legal Document'
+              required={false}
+              checked={false}
+              onChange={() => { }}
+            />
+          </div>
+
+          <div className={styles.uploadedFileLegalText}>
+            <p>Legal documents will not appear in your story. They are only available on your Home screen</p>
+          </div>
+
           <div className={styles.uploadedFileButton}>
             <Button
               variant="primary"
@@ -386,8 +418,8 @@ const handleContinue = async () => {
         </>
       )}
 
-      {/* Upload Button - Only show when no file is selected */}
-      {!chooseFile && (
+      {/* Upload Button - Only show when no file is selected and not continued */}
+      {!chooseFile && !hasContinued && (
         <div className={styles.uploadFileButton}>
           <Button
             variant="primary"
@@ -413,8 +445,9 @@ const handleContinue = async () => {
           <Button
             variant="primary"
             onClick={handleContinue}
+            disabled={isUpdating}
           >
-            Next
+            {isUpdating ? ('Updating') : ('Next')}
           </Button>
         </div>
       )}

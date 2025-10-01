@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './scss/_bondConfirmation.module.scss'
 import { CircleCheckBig } from 'lucide-react';
 import Button from '@/reusable/Button';
@@ -6,6 +6,26 @@ import { useNavigate } from 'react-router-dom';
 
 const PaymentComfirmation = () => {
     const navigate = useNavigate();
+    const [isReloading, setIsReloading] = useState(null)
+
+    const handleReload = async () => {
+   
+        setIsReloading(true)
+   
+       try {
+            
+            window.location.reload()
+
+       } catch (error) {
+           console.error(error)
+       } finally {
+           window.location.reload()
+           setTimeout(() => 
+               setIsReloading(false), 800
+            )
+        }
+   
+   }
 
     return (
         <div className={styles.bondConfirmationContainer}>
@@ -21,9 +41,10 @@ const PaymentComfirmation = () => {
 
             <Button
                 variant="primary"
-                onClick={() => navigate('/dashboard')}
+                onClick={handleReload}
+                disabled={isReloading}
             >
-                Next
+                {isReloading ? ('Reloading') : ('Next')}
             </Button>
         </div>
     )

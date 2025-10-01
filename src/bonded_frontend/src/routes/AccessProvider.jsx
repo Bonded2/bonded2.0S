@@ -22,7 +22,7 @@ function AccessProvider({ children }) {
                         '/wizard/integration-calendar', '/wizard/integration-photo', '/wizard/integration-location', '/wizard/integration-complete', '/wizard/integration-pending',
                         '/wizard/integration-confirmation', '/wizard/payment', '/wizard/payment-pending', '/wizard/payment-comfirmation', '/wizard/complete' ]
     const verifiedRoutes = [ '/dashboard', '/dashboard/timeline', '/dashboard/open-chat', '/dashboard/notification', '/dashboard/export',
-                            '/dashboard/photo', '/dashboard/message', '/dashboard/email', '/dashboard/media', '/dashboard/calendar', '/dashboard/video-calls', '/dashboard/photo-selection' ]
+                            '/dashboard/photo', '/dashboard/message', '/dashboard/email', '/dashboard/media', '/dashboard/calendar', '/dashboard/video-calls', '/dashboard/photo-selection', '/dashboard/profile-information', '/dashboard/settings' ]
 
     if (loading) {
         return (
@@ -42,7 +42,7 @@ function AccessProvider({ children }) {
                 : <Navigate to='/login' />
         }
 
-        if (userData && (userData.role === 'User' && userData.status === 'Single')) {
+        if (userData && (userData.role === 'User' && (userData.status === 'Single' || userData.status === 'Complicated'))) {
             if (userRoutes.includes(location.pathname)) {
                 return children
             } else {

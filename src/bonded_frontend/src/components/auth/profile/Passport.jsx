@@ -52,7 +52,7 @@ const Passport = () => {
                     <Button
                         variant="secondary"
                         className={styles.passportButtonDualLeft}
-                        onClick={() => navigate('/wizard/email')}>
+                        onClick={() => navigate('/wizard')}>
                         <ArrowLeft />
                         Back
                     </Button>

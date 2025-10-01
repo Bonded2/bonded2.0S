@@ -18,11 +18,13 @@ const BondInvitation = () => {
         setLoading(true)
         setError(null)
 
-        const inviterName = userData?.username || userData?.email
+        // const inviterName = 'null'
+
+        const inviterName = userData?.email
 
         try {
             const res = await fetch(
-                'https://mfrrezpifikqmuraxevz.supabase.co/functions/v1/hyper-function',
+                'https://bonded-mail.reveriontech.workers.dev',
                 {
                     method: 'POST',
                     headers: {
@@ -42,7 +44,7 @@ const BondInvitation = () => {
 
             navigate('/wizard/bond-pending')
         } catch (err) {
-            console.log(userData.username)
+            // console.log(userData.username)
             setError(err.message || 'Unexpected error')
         } finally {
             setLoading(false)
