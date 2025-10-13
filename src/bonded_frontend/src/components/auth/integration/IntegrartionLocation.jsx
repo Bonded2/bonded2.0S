@@ -28,6 +28,7 @@ const IntegrartionLocation = () => {
     const [permState, setPermState] = useState('prompt')
     const [status, setStatus] = useState('')
     const [coords, setCoords] = useState(null)
+    const [showInfoModal, setShowInfoModal] = useState(false)
 
     const handleNavigateToStep = (step) => {
         navigate(step);
@@ -36,7 +37,7 @@ const IntegrartionLocation = () => {
     // ANCHOR: Check if running in secure context (required for geolocation)
     const secure = useMemo(() => {
         // Required by browsers except localhost
-        return window.isSecureContext || window.location?.startsWith?.('http://localhost')
+        return window.isSecureContext || window.location.hostname === 'localhost'
     }, [])
 
     // ANCHOR: Boot: restore saved choice & detect capabilities
@@ -168,9 +169,7 @@ const IntegrartionLocation = () => {
                 <p>
                     Enable location sharing with Bonded. We use your location to verify time spent together
                     with your partner. Other location data is ignored. Your location is used only while the
-                    app is open. <button className={styles.inlineLink} onClick={() => alert(
-                        'We request precise location once to confirm proximity. No background tracking. You can revoke any time in browser settings.'
-                    )}>Read more</button>
+                    app is open. <button className={styles.inlineLink} onClick={() => setShowInfoModal(true)}>Read more</button>
                 </p>
 
                 {/* ANCHOR: Unsupported browser warning */}
@@ -226,6 +225,25 @@ const IntegrartionLocation = () => {
                     </Button>
                 </div>
             </div>
+
+            {/* ANCHOR: Info Modal (Replaces alert()) */}
+            {showInfoModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowInfoModal(false)}>
+                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                        <h3 className={styles.modalTitle}>Location Access Details</h3>
+                        <p className={styles.modalText}>
+                            We request precise location once to confirm proximity. No background tracking is performed. 
+                            You can revoke this permission anytime using your browser or device site settings.
+                        </p>
+                        <Button
+                            variant="primary"
+                            onClick={() => setShowInfoModal(false)}
+                        >
+                            Got It
+                        </Button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

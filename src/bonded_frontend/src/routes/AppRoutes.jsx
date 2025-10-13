@@ -58,6 +58,19 @@ import {
   ChatMessage,
   ChatList,
   Search,
+  Documents,
+  DocumentSelection,
+  Upload,
+  UploadConfirmation,
+  SettingIntegration,
+  SettingPolicies,
+  SettingConfirmation,
+  ProfileInformationEdit,
+  StoryMaker,
+  ApplicationMaker,
+  CustomExport,
+  ExportConfirmation,
+  DetectedImage
 } from "./LazyCodeSplitting";
 import { SessionProvider } from "./SessionProvider"
 import AccessProvider from "./AccessProvider";
@@ -138,6 +151,19 @@ const AppRoutes = () => {
                   <Route path="chat-message" element={<ChatMessage />} />
                   <Route path="chat-list" element={<ChatList />} />
                   <Route path="search" element={<Search />} />
+                  <Route path="documents" element={<Documents />} />
+                  <Route path="document-selection" element={<DocumentSelection />} />
+                  <Route path="upload" element={<Upload />} />
+                  <Route path="upload-confirmation" element={<UploadConfirmation />} />
+                  <Route path="setting-integration" element={<SettingIntegration />} />
+                  <Route path="setting-policies" element={<SettingPolicies />} />
+                  <Route path="setting-confirmation" element={<SettingConfirmation />} />
+                  <Route path="edit" element={<ProfileInformationEdit />} />
+                  <Route path="story-maker" element={<StoryMaker />} />
+                  <Route path="application-maker" element={<ApplicationMaker />} />
+                  <Route path="custom-export" element={<CustomExport />} />
+                  <Route path="export-confirmation" element={<ExportConfirmation />} />
+                  <Route path="detected-image" element={<DetectedImage />} />
                 </Route>
 
               </Route>

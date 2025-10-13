@@ -34,11 +34,7 @@ function LoginFunctions() {
             
             const result = await authenticatedActor.create_user(provider, inviter)
 
-             if (result.Err) {
-                console.log(result.Err)
-                setSignInError(result.Err)
-                localStorage.removeItem('bonded-invitation-mail')
-            } else if (result.Ok) {
+            if (result.Ok) {
                 const userData = result.Ok
                 setUserIdentity(userIdentity)
                 setAuthenticatedActor(authenticatedActor)
@@ -82,11 +78,7 @@ function LoginFunctions() {
             
             const result = await authenticatedActor.create_user(provider, inviter)
 
-            if (result.Err) {
-                console.log(result.Err)
-                setSignInError(result.Err)
-                localStorage.removeItem('bonded-invitation-mail')
-            } else if (result.Ok) {
+            if (result.Ok) {
                 const userData = result.Ok
                 setUserIdentity(userIdentity)
                 setAuthenticatedActor(authenticatedActor)
@@ -129,11 +121,12 @@ function LoginFunctions() {
             
             const result = await authenticatedActor.create_user(provider, inviter)
 
-             if (result.Err) {
-                console.log(result.Err)
-                setSignInError(result.Err)
-                localStorage.removeItem('bonded-invitation-mail')
-            } else if (result.Ok) {
+            //  if (result.Err) {
+            //     console.log(result.Err)
+            //     setSignInError(result.Err)
+            //     localStorage.removeItem('bonded-invitation-mail')
+            // } else 
+            if (result.Ok) {
                 const userData = result.Ok
                 setUserIdentity(userIdentity)
                 setAuthenticatedActor(authenticatedActor)

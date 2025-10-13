@@ -22,7 +22,7 @@ impl UsersManager {
 
     pub fn create_user(&mut self, caller: Principal, provider: String, inviter: Option<String>) -> Result<User, String> {
         if self.users.contains_key(&caller) {
-            return self.get_user(caller);
+            return Err("User information has already been registered.".into());
         }
         let now = ic_cdk::api::time() as i64;
         let caller_text = caller.to_text();
@@ -301,6 +301,10 @@ impl UsersManager {
     pub fn update_user_status(&mut self, caller: Principal) -> Result<User, String> {
 
         let existing_user = self.users.get(&caller).ok_or("Unauthorized Access. User cannot be found.")?.clone();
+
+        if existing_user.partner_email.is_empty() && existing_user.partner_username.is_empty() {
+            return Err("Cannot update status without a partner.".into());
+        }
 
         let new_status = match existing_user.status {
             Status::Single => Status::Complicated,

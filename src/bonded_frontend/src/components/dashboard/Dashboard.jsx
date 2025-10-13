@@ -3,14 +3,14 @@ import styles from './scss/_dashboard.module.scss'
 import MobileCarousel from '@/reusable/MobileCarousel'
 import { ArrowUpFromLine } from 'lucide-react';
 import Button from '@/reusable/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDashboard } from './DashboardFunction';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const {
         images,
         dates,
-        handlePhotoUpload,
         browseEvidence,
         evidence,
     } = useDashboard();
@@ -65,20 +65,13 @@ const Dashboard = () => {
                 </div>
 
                 <div className={styles.dashButton}>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handlePhotoUpload}
-                        style={{ display: 'none' }}
-                        id="photo-upload"
-                    />
                     <Button
                         variant="primary"
                         size="medium"
                         icon={<ArrowUpFromLine size={10} />}
                         iconPosition="left"
                         className={styles.dashButtonPrimary}
-                        onClick={() => document.getElementById('photo-upload').click()}
+                        onClick={() => navigate('/dashboard/upload')}
                     >
                         Upload
                     </Button>

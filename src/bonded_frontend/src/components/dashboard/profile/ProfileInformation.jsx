@@ -1,15 +1,61 @@
 import React, { useState } from 'react'
 import styles from './scss/_profileInformation.module.scss'
 import { Pencil, Trash2, Heart, ChevronUp } from 'lucide-react';
-import Button from '@/reusable/Button';
-import rimuro from '@/assets/example/rimuro.jpg';
-import nishimiya from '@/assets/example/nishimiya.jpg';
+// import Button from '@/reusable/Button';
+// import rimuro from '@/assets/example/rimuro.jpg';
+// import nishimiya from '@/assets/example/nishimiya.jpg';
 import logo from '/icons/icon-384x384.png'
 import { Session } from '../../../routes/SessionProvider';
+import { useNavigate } from 'react-router-dom';
+
+const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+
+const parseDocumentType = (docString) => {
+    if (!docString) return { type: "N/A", country: "N/A", date: "N/A" };
+
+    const [type, countryCode, dateRange] = docString.split(" | ");
+
+    const prettify = (text) =>
+        text
+            ? text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+            : "N/A";
+
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "N/A";
+        const firstDate = dateStr.split("-")[0].trim();
+        const parsedDate = new Date(firstDate);
+
+        if (isNaN(parsedDate)) return firstDate;
+
+        return parsedDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+        });
+    };
+
+    const formatCountry = (code) => {
+        if (!code) return "N/A";
+        try {
+            return regionNames.of(code.trim().toUpperCase()) || code;
+        } catch {
+            return code;
+        }
+    };
+
+    return {
+        type: prettify(type),
+        country: formatCountry(countryCode),
+        date: formatDate(dateRange),
+    };
+};
 
 const ProfileInformation = () => {
     const [isPartner, setIsPartner] = useState(false);
     const { userData, partnerData } = Session()
+
+    const parsedUserDoc = parseDocumentType(userData?.document_type);
+    const parsedPartnerDoc = parseDocumentType(partnerData?.document_type);
 
     const defaultUserData = {
         id: 3,
@@ -17,7 +63,7 @@ const ProfileInformation = () => {
         firstname: userData?.firstname,
         middlename: userData?.middlename,
         lastname: userData?.lastname,
-        sex: 'Male',
+        sex: userData?.gender,
         dateOfBirth: '25.10.1985',
         issuedDate: '10.03.2023',
         expiryDate: '10.03.2033',
@@ -25,10 +71,10 @@ const ProfileInformation = () => {
         primaryresidence: userData?.primary_residence,
         taxableresidence: userData?.primary_residence,
         significantresidence: userData?.primary_residence,
-        canisterid: 'rryah-gqaaa-aaaaa-cag',
-        typefile: userData?.document_type,
-        issuefile: '10 Mar 2023',
-        issuefilecountry: 'USA',
+        canisterid: userData?.email,
+        typefile: parsedUserDoc.type,
+        issuefile: parsedUserDoc.date,
+        issuefilecountry: parsedUserDoc.country,
     }
 
     const defaultPartnerData = {
@@ -37,7 +83,7 @@ const ProfileInformation = () => {
         firstname: partnerData?.firstname || partnerData?.email,
         middlename: partnerData?.middlename,
         lastname: partnerData?.lastname,
-        sex: 'Female',
+        sex: partnerData?.gender,
         dateOfBirth: '18.06.1988',
         issuedDate: '10.03.2023',
         expiryDate: '10.03.2033',
@@ -45,13 +91,18 @@ const ProfileInformation = () => {
         primaryresidence: partnerData?.primary_residence,
         taxableresidence: partnerData?.primary_residence,
         significantresidence: partnerData?.primary_residence,
-        canisterid: 'rryah-gqaaa-aaaaa-cag',
-        typefile: partnerData?.document_type,
-        issuefile: '10 Mar 2023',
-        issuefilecountry: 'USA',
+        canisterid: partnerData?.email,
+        typefile: parsedPartnerDoc.type,
+        issuefile: parsedPartnerDoc.date,
+        issuefilecountry: parsedPartnerDoc.country,
     }
 
+    const navigate = useNavigate();
     const currentData = isPartner ? defaultPartnerData : defaultUserData;
+
+    const handleNavigateToStep = (path) => {
+        navigate(path);
+    };
 
     return (
         <div className={styles.profileInformationContainer}>
@@ -61,7 +112,7 @@ const ProfileInformation = () => {
 
                 <div className={styles.headerActions}>
                     <span className={styles.iconContainer}>
-                        <Pencil />
+                        <Pencil onClick={() => handleNavigateToStep('/dashboard/edit')} />
                     </span>
                     <span className={styles.iconContainer}>
                         <Trash2 />

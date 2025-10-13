@@ -1,0 +1,461 @@
+@use "@/style/variables" as *;
+
+.uploadContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    // Hide scrollbar for webkit browsers (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: none;
+
+    // Hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 12px;
+
+    .headerTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: start;
+        line-height: 1.2;
+
+        // ANCHOR: Desktop responsive
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet responsive
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile responsive
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile responsive
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        // ANCHOR: Extra small mobile
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+}
+
+.uploadContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 10px;
+    align-items: center;
+    margin-top: 2rem;
+
+    p {
+        font-size: 14px;
+        color: var(--front-color-400);
+        text-align: center;
+        line-height: 1.5;
+        max-width: 500px;
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        padding: 24px 12px;
+        gap: 24px;
+
+        p {
+            font-size: 15px;
+        }
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 16px 8px;
+        gap: 16px;
+
+        p {
+            font-size: 13px;
+        }
+    }
+}
+
+.selectedFile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    margin-top: 1rem;
+
+    .selectedFileHeader {
+        p {
+            font-size: 14px;
+            color: var(--front-color-400);
+            line-height: 1.5;
+            margin: 0;
+        }
+    }
+
+    .selectedFileContentContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .selectedFileContent {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .selectedFileRow {
+        background-color: var(--background-color-500);
+        border-radius: 8px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .selectedFileInfo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .selectedFileIcon {
+        color: var(--blue-color-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .selectedFileName {
+        font-size: 14px;
+        color: var(--front-color-400);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .selectedFileRemove {
+        background: none;
+        border: none;
+        color: var(--front-color-500);
+        font-size: 12px;
+        cursor: pointer;
+        text-decoration: underline;
+        flex-shrink: 0;
+        padding: 4px 8px;
+
+        &:hover {
+            color: var(--front-color-600);
+        }
+    }
+}
+
+.dropdownContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        > p {
+            font-size: 14px;
+            color: var(--front-color-400);
+            font-weight: 500;
+            margin: 0;
+        }
+    }
+}
+
+.datePickerContainer {
+    position: relative;
+    width: 100%;
+}
+
+.datePickerInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--background-color-100) !important;
+    border: 1px solid var(--border-color-300) !important;
+    border-radius: 4px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        border-color: var(--border-color-400) !important;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-color-200);
+    }
+
+    .dateDisplay {
+        color: var(--front-color-700) !important;
+        font-family: var(--font-family-sans);
+        font-size: 16px;
+        line-height: 1.5;
+        flex: 1;
+        text-align: left;
+
+        &:empty::before {
+            content: "DD/MM/YYYY";
+            color: var(--front-color-500) !important;
+            opacity: 0.7;
+        }
+    }
+
+    .calendarIcon {
+        color: var(--front-color-500) !important;
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+}
+
+.calendarWrapper {
+    position: static;
+    margin-top: 8px;
+    background-color: var(--background-color-100) !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 12px;
+    }
+}
+
+.uploadFileButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 10px;
+    width: 100%;
+
+    // Make button full width
+    button {
+        width: 100%;
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        margin-top: 24px;
+        padding: 0 10px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        margin-top: 16px;
+        padding: 0 10px;
+    }
+}
+
+.uploadedFileDisplay {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    margin-top: 1rem;
+
+    .uploadedFileHeader {
+        p {
+            font-size: 14px;
+            color: var(--front-color-400);
+            line-height: 1.5;
+            margin: 0;
+        }
+    }
+
+    .uploadedFileCard {
+        background-color: var(--background-color-500);
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .uploadedFileInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .uploadedFileInfoHeader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .uploadedFileIcon {
+        color: var(--blue-color-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .uploadedFileName {
+        font-size: 16px;
+        color: var(--front-color-400);
+        font-weight: 600;
+        flex: 1;
+    }
+
+    .uploadedFileRemove {
+        background: none;
+        border: none;
+        color: var(--front-color-500);
+        font-size: 12px;
+        cursor: pointer;
+        text-decoration: underline;
+        flex-shrink: 0;
+        padding: 4px 8px;
+
+        &:hover {
+            color: var(--front-color-600);
+        }
+    }
+
+    .uploadedFileDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .uploadedFileMeta {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .uploadedFileDate,
+    .uploadedFileCountry {
+        font-size: 12px;
+        color: var(--front-color-1400);
+        line-height: 1.4;
+    }
+}
+
+.uploadedFileAddAnother {
+    background: none;
+    border: none;
+    color: var(--blue-color-100);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: var(--blue-color-200);
+    }
+
+    p {
+        margin: 0;
+        font-weight: 500;
+    }
+}
+
+.uploadedFileCheckbox {
+    padding: 12px 0;
+}
+
+.uploadedFileLegalText {
+    padding: 0 0 12px;
+
+    p {
+        font-size: 12px;
+        color: var(--front-color-1400);
+        line-height: 1.5;
+        margin: 0;
+    }
+}
+
+.uploadedFileButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 10px;
+    width: 100%;
+
+    // Make button full width
+    button {
+        width: 100%;
+    }
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        margin-top: 24px;
+        padding: 0 10px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        margin-top: 16px;
+        padding: 0 10px;
+    }
+}
+
+.fileInput {
+    display: none;
+}

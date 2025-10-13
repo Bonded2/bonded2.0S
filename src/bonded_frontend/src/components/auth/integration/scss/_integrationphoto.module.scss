@@ -90,7 +90,7 @@
         font-size: 14px;
         padding: 0;
         margin: 0;
-        
+
         &:hover {
             color: var(--secondary-color-dark);
         }
@@ -144,7 +144,6 @@
         height: 16px;
         flex-shrink: 0;
     }
-
 }
 
 .integrationPhotoCheckbox {
@@ -267,7 +266,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    
+
     // Make buttons full width
     button {
         width: 100%;
@@ -378,4 +377,61 @@
             }
         }
     }
+}
+
+// ANCHOR: Modal styles (replaces alert())
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modalContent {
+    background-color: var(--background-color-100);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    @include respond-down(mobile) {
+        padding: 20px;
+        max-width: 340px;
+    }
+}
+
+.modalTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--front-color-400);
+    margin: 0 0 16px 0;
+
+    @include respond-down(mobile) {
+        font-size: 18px;
+        margin: 0 0 12px 0;
+    }
+}
+
+.modalText {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--front-color-400);
+    margin: 0 0 20px 0;
+
+    @include respond-down(mobile) {
+        font-size: 13px;
+        margin: 0 0 16px 0;
+    }
+}
+
+.modalContent button {
+    width: 100%;
 }

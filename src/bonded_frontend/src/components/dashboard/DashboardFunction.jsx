@@ -1,5 +1,5 @@
 import React from 'react'
-import { MessageCircle, ChevronRight, Image, Phone, Facebook, Mail, Calendar } from 'lucide-react';
+import { MessageCircle, ChevronRight, Image, Phone, Facebook, Mail, Calendar, File  } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addUploadedPhoto } from '@/store/slices/uploadSline';
 import { getIdentity } from '../../services/ii'
@@ -121,7 +121,7 @@ export const useDashboard = () => {
             icon: <Facebook />,
             title: 'Social Media',
             rightIcon: <ChevronRight />,
-            to: '/dashboard/smedia',
+            to: '/dashboard/media',
         },
         {
             icon: <Mail />,
@@ -134,6 +134,12 @@ export const useDashboard = () => {
             title: 'Calendar',
             rightIcon: <ChevronRight />,
             to: '/dashboard/calendar',
+        },
+        {
+            icon: <File />,
+            title: 'Documents',
+            rightIcon: <ChevronRight />,
+            to: '/dashboard/documents',
         },
     ];
 
@@ -166,7 +172,6 @@ export const useDashboard = () => {
     return {
         images,
         dates,
-        handlePhotoUpload,
         browseEvidence,
         evidence,
     };

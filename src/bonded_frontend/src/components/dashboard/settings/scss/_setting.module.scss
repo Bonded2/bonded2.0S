@@ -1,0 +1,116 @@
+@use "@/style/_variables.scss" as *;
+
+.setting {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    // Hide scrollbar for webkit browsers (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: none;
+
+    // Hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 0.7rem;
+    gap: 2px;
+    padding: 0 4px;
+
+    .headerTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: flex-start;
+        line-height: 1.2;
+        margin: 0;
+
+        // ANCHOR: Desktop
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+}
+
+// ANCHOR: Menu container for ListItem components
+.menuContainer {
+    margin-top: 2rem;
+    background-color: var(--background-color-100);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        margin-top: 2.5rem;
+        border-radius: 16px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        margin-top: 1.5rem;
+        border-radius: 10px;
+    }
+
+    @include respond-down(mobile) {
+        margin-top: 1.2rem;
+        border-radius: 8px;
+    }
+}

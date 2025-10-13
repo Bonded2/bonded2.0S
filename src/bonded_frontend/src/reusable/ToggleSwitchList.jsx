@@ -28,7 +28,7 @@ const ToggleSwitchList = ({
 
     return (
         <div className={[styles.toggleList, className].filter(Boolean).join(' ')} style={styleVar}>
-            {normalizedItems.map(({ id, label }) => {
+            {normalizedItems.map(({ id, label, description }) => {
                 const active = Boolean(values[id])
                 const isDisabled = disabledIds.includes(id)
                 return (
@@ -44,7 +44,10 @@ const ToggleSwitchList = ({
                         aria-pressed={active}
                         disabled={isDisabled}
                     >
-                        <span className={styles.label}>{label}</span>
+                        <span className={styles.content}>
+                            <span className={styles.label}>{label}</span>
+                            {description && <span className={styles.description}>{description}</span>}
+                        </span>
                         <span className={styles.switch}>
                             <span className={styles.knob} />
                         </span>
@@ -59,7 +62,11 @@ ToggleSwitchList.propTypes = {
     items: PropTypes.arrayOf(
         PropTypes.oneOfType([
             PropTypes.string,
-            PropTypes.shape({ id: PropTypes.string.isRequired, label: PropTypes.string.isRequired })
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+                description: PropTypes.string
+            })
         ])
     ),
     values: PropTypes.object,

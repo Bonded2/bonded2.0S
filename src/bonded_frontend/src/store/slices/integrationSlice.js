@@ -69,6 +69,13 @@ const initialState = {
         access: '',
         coordinates: null // { lat, lng, accuracy, timestamp }
     },
+
+    // Integration Status
+    status: {
+        isConfirmed: false,
+        lastUpdated: null,
+        updatedBy: null
+    }
 }
 
 const integrationSlice = createSlice({
@@ -152,6 +159,13 @@ const integrationSlice = createSlice({
         setLocationCoordinates: (state, action) => {
             state.location.coordinates = action.payload
         },
+
+        // Integration Status Actions
+        updateIntegrationStatus: (state, action) => {
+            state.status.isConfirmed = action.payload.status === 'confirmed'
+            state.status.lastUpdated = action.payload.timestamp
+            state.status.updatedBy = action.payload.updatedBy
+        },
     }
 })
 
@@ -170,7 +184,8 @@ export const {
     setSingleCalendarService,
     setPhotoAccess,
     setLocationAccess,
-    setLocationCoordinates
+    setLocationCoordinates,
+    updateIntegrationStatus
 } = integrationSlice.actions;
 
 export default integrationSlice.reducer;

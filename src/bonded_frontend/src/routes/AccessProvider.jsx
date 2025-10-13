@@ -22,7 +22,8 @@ function AccessProvider({ children }) {
                         '/wizard/integration-calendar', '/wizard/integration-photo', '/wizard/integration-location', '/wizard/integration-complete', '/wizard/integration-pending',
                         '/wizard/integration-confirmation', '/wizard/payment', '/wizard/payment-pending', '/wizard/payment-comfirmation', '/wizard/complete' ]
     const verifiedRoutes = [ '/dashboard', '/dashboard/timeline', '/dashboard/open-chat', '/dashboard/notification', '/dashboard/export',
-                            '/dashboard/photo', '/dashboard/message', '/dashboard/email', '/dashboard/media', '/dashboard/calendar', '/dashboard/video-calls', '/dashboard/photo-selection', '/dashboard/profile-information', '/dashboard/settings' ]
+                            '/dashboard/photo', '/dashboard/message', '/dashboard/direct-message-selection', '/dashboard/email', '/dashboard/media', '/dashboard/calendar', '/dashboard/video-calls', '/dashboard/photo-selection', '/dashboard/profile-information', '/dashboard/settings',
+                            '/dashboard/document', '/dashboard/document-selection', '/dashboard/upload', '/dashboard/upload-confirmation', '/dashboard/chat-message', '/dashboard/chat-list', '/dashboard/search' ]
 
     if (loading) {
         return (

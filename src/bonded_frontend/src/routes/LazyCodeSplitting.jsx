@@ -96,7 +96,7 @@ export const IntegrationMessage = lazy(() =>
     import("@/components/auth/integration/IntegrartionMessage")
 );
 
-export const IntegrationEmail = lazy(() =>  
+export const IntegrationEmail = lazy(() =>
     import("@/components/auth/integration/IntegrartionEmail")
 );
 
@@ -233,15 +233,57 @@ export const Search = lazy(() =>
     import("@/components/dashboard/navigation/search/Search")
 );
 
+export const Documents = lazy(() =>
+    import("@/components/dashboard/document/Documents")
+);
 
+export const DocumentSelection = lazy(() =>
+    import("@/components/dashboard/document/DocumentSelection")
+);
 
+export const Upload = lazy(() =>
+    import("@/components/dashboard/upload/Upload")
+);
 
+export const UploadConfirmation = lazy(() =>
+    import("@/components/dashboard/upload/UploadConfirmation")
+);
 
+export const SettingIntegration = lazy(() =>
+    import("@/components/dashboard/settings/SettingIntegration")
+);
 
+export const SettingPolicies = lazy(() =>
+    import("@/components/dashboard/settings/SettingPolicies")
+);
 
+export const SettingConfirmation = lazy(() =>
+    import("@/components/dashboard/settings/SettingConfirmation")
+);
 
+export const ProfileInformationEdit = lazy(() =>
+    import("@/components/dashboard/profile/EditProfile")
+);
 
+export const StoryMaker = lazy(() =>
+    import("@/components/dashboard/export/StoryMaker")
+);
 
+export const ApplicationMaker = lazy(() =>
+    import("@/components/dashboard/export/ApplicationMaker")
+);
+
+export const CustomExport = lazy(() =>
+    import("@/components/dashboard/export/CustomExport")
+);
+
+export const ExportConfirmation = lazy(() =>
+    import("@/components/dashboard/export/ExportConfirmation")
+);
+
+export const DetectedImage = lazy(() =>
+    import("@/components/dashboard/upload/DetectedImage")
+);
 
 
 

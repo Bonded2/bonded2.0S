@@ -1,1 +1,208 @@
 @use "@/style/_variables.scss" as *;
+
+.editProfileContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefo
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 12px;
+
+    .headerTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: start;
+        line-height: 1.2;
+
+        // ANCHOR: Desktop responsive
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet responsive
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile responsive
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile responsive
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        // ANCHOR: Extra small mobile
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+}
+
+.editProfileContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editProfileImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto 0;
+    gap: 10px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; // ANCHOR: Make perfectly round like in the image
+    overflow: hidden;
+    position: relative; // ANCHOR: Enable absolute positioning for edit icon
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%; // ANCHOR: Make image perfectly round
+    }
+}
+
+.editProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+
+    // ANCHOR: Form Row Layout
+    .formRow {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+
+        // ANCHOR: Single field row (Last name row)
+        &:nth-child(2) {
+            .formField {
+                flex: 1;
+                max-width: 450px;
+            }
+        }
+
+        // ANCHOR: Two field rows
+        .formField {
+            flex: 1;
+            min-width: 0; // Prevents flex items from overflowing
+        }
+    }
+}
+
+// ANCHOR: Profile Image Edit Icon
+.imageEditIcon {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+    background: #1a365d; // ANCHOR: Dark blue color like in the image
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(26, 54, 93, 0.4);
+    border: 2px solid white; // ANCHOR: White border like in the image
+
+    &:hover {
+        background: #2d3748;
+        transform: scale(1.05);
+    }
+}
+
+// ANCHOR: Responsive Design for Form
+@media (max-width: 768px) {
+    .editProfileForm {
+        padding: 0 10px;
+        
+        .formRow {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+    
+    .editProfileImage {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        
+        img {
+            border-radius: 50%;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .editProfileForm {
+        padding: 0 5px;
+        
+        .formRow {
+            gap: 10px;
+        }
+    }
+    
+    .editProfileImage {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        
+        img {
+            border-radius: 50%;
+        }
+    }
+}

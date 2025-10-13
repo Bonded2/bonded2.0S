@@ -117,7 +117,19 @@ const UploadFile = () => {
         byteArray[i] = byteString.charCodeAt(i)
       }
 
-      const fileData = await authenticatedActor.update_user_documents(selectedFileType, [Array.from(byteArray)])
+      const formatFileMetaString = (fileType, countryCode, dateRange) => {
+        const type = fileType || "UnknownType";
+        const country = countryCode || "UnknownCountry";
+
+        const start = dateRange?.start ? new Date(dateRange.start).toLocaleDateString() : "N/A";
+        const end = dateRange?.end ? new Date(dateRange.end).toLocaleDateString() : "N/A";
+
+        return `${type} | ${country} | ${start} - ${end}`;
+      };
+
+      const metaString = formatFileMetaString(selectedFileType, selectedCountryCode, selectedDateRange)
+
+      const fileData = await authenticatedActor.update_user_documents(metaString, [Array.from(byteArray)])
       // Save file metadata
       const newFile = {
         fileName: selectedFile.name,

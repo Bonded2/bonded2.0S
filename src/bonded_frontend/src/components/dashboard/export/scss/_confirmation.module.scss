@@ -1,0 +1,135 @@
+@use "@/style/variables" as *;
+
+.confirmationContainer {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--background-color-100);
+    padding: 0 16px;
+    overflow-x: hidden;
+
+    // Hide scrollbar for webkit browsers (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: none;
+
+    // Hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    // ANCHOR: Desktop responsive
+    @include respond-up(desktop) {
+        padding: 0 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    // ANCHOR: Tablet responsive
+    @include respond-between(tablet, desktop) {
+        padding: 0 20px;
+    }
+
+    // ANCHOR: Mobile responsive
+    @include respond-down(tablet) {
+        padding: 0 16px;
+    }
+
+    // ANCHOR: Small mobile responsive
+    @include respond-down(mobile) {
+        padding: 0 12px;
+    }
+
+    // ANCHOR: Extra small mobile
+    @include respond-down(small) {
+        padding: 0 8px;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+
+    .headerTitle {
+        font-size: 24px;
+        color: var(--front-color-700);
+        font-weight: 700;
+        text-align: center;
+        line-height: 1.2;
+        margin: 0;
+
+        // ANCHOR: Desktop responsive
+        @include respond-up(desktop) {
+            font-size: 28px;
+        }
+
+        // ANCHOR: Tablet responsive
+        @include respond-between(tablet, desktop) {
+            font-size: 26px;
+        }
+
+        // ANCHOR: Mobile responsive
+        @include respond-down(tablet) {
+            font-size: 22px;
+        }
+
+        // ANCHOR: Small mobile responsive
+        @include respond-down(mobile) {
+            font-size: 20px;
+        }
+
+        // ANCHOR: Extra small mobile
+        @include respond-down(small) {
+            font-size: 18px;
+        }
+    }
+
+    .semititle {
+        font-size: 15px;
+        color: var(--front-color-400);
+        font-weight: 400;
+        text-align: center;
+        line-height: 1.5;
+        margin: 0;
+
+        // ANCHOR: Desktop responsive
+        @include respond-up(desktop) {
+            font-size: 16px;
+        }
+
+        // ANCHOR: Tablet responsive
+        @include respond-between(tablet, desktop) {
+            font-size: 15px;
+        }
+
+        // ANCHOR: Mobile responsive
+        @include respond-down(tablet) {
+            font-size: 14px;
+        }
+    }
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 16px;
+}
+
+.button {
+    width: 100%;
+}

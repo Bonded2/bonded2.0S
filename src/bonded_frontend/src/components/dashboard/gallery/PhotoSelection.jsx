@@ -3,6 +3,7 @@ import Breadcrumb from '@/reusable/Breadcrumb'
 import styles from './scss/_photoSelection.module.scss'
 import { Check, MapPin, Pin, Users } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
+import { Session } from '../../../routes/SessionProvider'
 
 const PhotoSelection = () => {
 
@@ -12,6 +13,7 @@ const PhotoSelection = () => {
     ]
 
     const { state } = useLocation()
+    const { userData } = Session()
 
     const data = state || {}
     const [expanded, setExpanded] = useState(false)
