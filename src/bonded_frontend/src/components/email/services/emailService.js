@@ -4,7 +4,7 @@ import InvitationEmail from '../InvitationEmail';
 export const sendInvitationEmail = async (to, inviterName, inviteLink) => {
   try {
     const data = await resend.emails.send({
-      from: 'Bonded <onboarding@bonded.app>',
+      from: 'Bonded <tech@bonded2.com>',
       to: [to],
       subject: `You're invited to join Bonded`,
       react: InvitationEmail({
@@ -23,7 +23,7 @@ export const sendInvitationEmail = async (to, inviterName, inviteLink) => {
 export const sendTestEmail = async () => {
   try {
     const data = await resend.emails.send({
-      from: 'Bonded <onboarding@bonded.app>',
+      from: 'Bonded <tech@bonded2.com>',
       to: ['delivered@resend.dev'],
       subject: 'Test Email from Bonded',
       react: InvitationEmail({
